@@ -27,7 +27,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SuccessResponse<UserResponse>> getUserProfile(@PathVariable UUID id){
-        return SuccessResponse.ok(userService.userProfileById(id),"Get User By id"+id);
+        return SuccessResponse.ok(userService.userProfileById(id),"User fetched with id "+id);
     }
 
     @PutMapping("/me/{id}")
@@ -35,18 +35,18 @@ public class UserController {
             @PathVariable UUID id,
             @Valid @RequestBody UpdateUserRequest updateUserRequest
             ){
-        return SuccessResponse.ok(userService.updateUser(id, updateUserRequest),"UPDATE Me");
+        return SuccessResponse.ok(userService.updateUser(id, updateUserRequest),"User updated");
     }
 
     @PostMapping("/addresses")
     public ResponseEntity<SuccessResponse<AddressResponse>> addUserAddress(
             @Valid @RequestBody AddressRequest addressRequest
             ){
-        return SuccessResponse.ok(userService.addAddress(addressRequest), "ADD Address");
+        return SuccessResponse.ok(userService.addAddress(addressRequest), "Address added");
     }
 
     @GetMapping("/addresses")
     public ResponseEntity<SuccessResponse<List<AddressResponse>>> getAllAddress(){
-        return SuccessResponse.ok(userService.listAddress(), "GET Address");
+        return SuccessResponse.ok(userService.listAddress(), "Address fetched");
     }
 }

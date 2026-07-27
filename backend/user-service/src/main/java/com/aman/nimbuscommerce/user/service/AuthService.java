@@ -31,11 +31,10 @@ public class AuthService {
         User user = modelMapper.map(registerRequest, User.class);
         return modelMapper.map(userRepository.save(user), UserResponse.class);
     }
-    public LoginResponse login(@Valid LoginRequest loginRequest) {
+    public LoginResponse login(LoginRequest loginRequest) {
         User user = userRepository
                 .findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new BadCredentialsException("Invalid email or password"));
-        System.out.println(user.toString());
         if(!user.isEnabled()){
             throw new BadCredentialsException(
                     "Your account has been disabled. Please contact support."
