@@ -1,4 +1,4 @@
-package com.aman.nimbuscommerce.user.dto;
+package com.aman.nimbuscommerce.user.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -7,7 +7,6 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Getter

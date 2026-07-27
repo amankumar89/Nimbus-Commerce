@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,6 +39,7 @@ public class User {
     private String lastName;
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private Role role = Role.CUSTOMER;
 
     @Column(nullable = false)
@@ -46,10 +47,10 @@ public class User {
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
 
     @OneToMany(
             mappedBy = "user",
@@ -57,9 +58,4 @@ public class User {
             orphanRemoval = true
     )
     private List<Address> addresses;
-
-    @PrePersist
-    public void prePersist(){
-        if(role == null) role = Role.CUSTOMER;
-    }
 }

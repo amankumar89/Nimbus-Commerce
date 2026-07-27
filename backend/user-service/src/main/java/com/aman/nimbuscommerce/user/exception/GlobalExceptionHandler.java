@@ -1,6 +1,6 @@
 package com.aman.nimbuscommerce.user.exception;
 
-import com.aman.nimbuscommerce.user.dto.ErrorResponse;
+import com.aman.nimbuscommerce.user.dto.response.ErrorResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;

@@ -1,11 +1,11 @@
-package com.aman.nimbuscommerce.user.dto;
+package com.aman.nimbuscommerce.user.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -13,6 +13,6 @@ import java.time.Instant;
 @AllArgsConstructor
 public class LoginResponse {
     private String token;
-    private Instant expiresAt;
+    private LocalDateTime expiresAt;
     private UserResponse user;
 }

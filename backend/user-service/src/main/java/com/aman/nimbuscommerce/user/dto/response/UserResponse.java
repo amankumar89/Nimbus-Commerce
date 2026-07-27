@@ -1,4 +1,4 @@
-package com.aman.nimbuscommerce.user.dto;
+package com.aman.nimbuscommerce.user.dto.response;
 
 import com.aman.nimbuscommerce.user.entity.Role;
 import lombok.AllArgsConstructor;
