@@ -6,6 +6,7 @@ import { registerSchema } from "@/features/auth/schemas";
 import { useRegisterMutation } from "@/features/auth/hooks";
 import FormField from "@/components/forms/FormField";
 import Input from "@/components/ui/Input";
+import Select from "@/components/ui/Select";
 import Button from "@/components/ui/Button";
 
 export default function RegisterPage() {
@@ -13,16 +14,21 @@ export default function RegisterPage() {
 
   const form = useForm({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
       confirmPassword: "",
+      role: "USER" as "ADMIN" | "USER",
     },
     onSubmit: async ({ value }) => {
       const result = registerSchema.safeParse(value);
       if (!result.success) return;
+
       await registerMutation.mutateAsync({
+        name: result.data.name,
         email: result.data.email,
         password: result.data.password,
+        role: result.data.role,
       });
     },
   });
@@ -44,6 +50,36 @@ export default function RegisterPage() {
         }}
         className="flex flex-col gap-4"
       >
+        <form.Field
+          name="name"
+          validators={{
+            onChange: ({ value }) => {
+              const result = registerSchema.shape.name.safeParse(value);
+              return result.success ? undefined : result.error.issues[0]?.message;
+            },
+          }}
+        >
+          {(field) => (
+            <FormField
+              label="Full Name"
+              htmlFor={field.name}
+              error={field.state.meta.isTouched ? field.state.meta.errors[0] : undefined}
+            >
+              <Input
+                id={field.name}
+                name={field.name}
+                type="text"
+                placeholder="Jane Doe"
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e.target.value)}
+                hasError={field.state.meta.isTouched && !!field.state.meta.errors.length}
+                autoComplete="name"
+              />
+            </FormField>
+          )}
+        </form.Field>
+
         <form.Field
           name="email"
           validators={{
@@ -133,6 +169,24 @@ export default function RegisterPage() {
                 hasError={field.state.meta.isTouched && !!field.state.meta.errors.length}
                 autoComplete="new-password"
               />
+            </FormField>
+          )}
+        </form.Field>
+
+        <form.Field name="role">
+          {(field) => (
+            <FormField label="Account Type" htmlFor={field.name}>
+              <Select
+                id={field.name}
+                name={field.name}
+                value={field.state.value}
+                onChange={(e) =>
+                  field.handleChange(e.target.value as "ADMIN" | "USER")
+                }
+              >
+                <option value="USER">User</option>
+                <option value="ADMIN">Admin</option>
+              </Select>
             </FormField>
           )}
         </form.Field>

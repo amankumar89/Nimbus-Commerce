@@ -19,8 +19,10 @@ export async function loginRequest(payload: {
 }
 
 export async function registerRequest(payload: {
+  name: string;
   email: string;
   password: string;
+  role: "ADMIN" | "USER";
 }): Promise<AuthResponse> {
   const { data } = await axiosInstance.post<AuthResponse>("/auth/register", payload);
   return data;
@@ -28,4 +30,25 @@ export async function registerRequest(payload: {
 
 export async function logoutRequest(): Promise<void> {
   await axiosInstance.post("/auth/logout");
+}
+
+export async function forgotPasswordRequest(payload: {
+  email: string;
+}): Promise<{ message: string }> {
+  const { data } = await axiosInstance.post<{ message: string }>(
+    "/auth/forgot-password",
+    payload
+  );
+  return data;
+}
+
+export async function resetPasswordRequest(payload: {
+  token: string;
+  password: string;
+}): Promise<{ message: string }> {
+  const { data } = await axiosInstance.post<{ message: string }>(
+    "/auth/reset-password",
+    payload
+  );
+  return data;
 }
