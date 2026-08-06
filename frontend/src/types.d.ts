@@ -1,4 +1,4 @@
-type Role = "ADMIN" | "USER";
+type Role = "ADMIN" | "CUSTOMER";
 
 interface AuthUser {
   id: string;

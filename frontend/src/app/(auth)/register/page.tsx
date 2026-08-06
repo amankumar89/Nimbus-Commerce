@@ -18,7 +18,7 @@ export default function RegisterPage() {
       email: "",
       password: "",
       confirmPassword: "",
-      role: "USER" as "ADMIN" | "USER",
+      role: "CUSTOMER" as Role,
     },
     onSubmit: async ({ value }) => {
       const result = registerSchema.safeParse(value);
@@ -181,10 +181,10 @@ export default function RegisterPage() {
                 name={field.name}
                 value={field.state.value}
                 onChange={(e) =>
-                  field.handleChange(e.target.value as "ADMIN" | "USER")
+                  field.handleChange(e.target.value as Role)
                 }
               >
-                <option value="USER">User</option>
+                <option value="CUSTOMER">Customer</option>
                 <option value="ADMIN">Admin</option>
               </Select>
             </FormField>

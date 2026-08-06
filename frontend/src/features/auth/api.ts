@@ -22,7 +22,7 @@ export async function registerRequest(payload: {
   name: string;
   email: string;
   password: string;
-  role: "ADMIN" | "USER";
+  role: Role;
 }): Promise<AuthResponse> {
   const { data } = await axiosInstance.post<AuthResponse>("/auth/register", payload);
   return data;

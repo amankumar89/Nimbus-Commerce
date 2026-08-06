@@ -9,7 +9,7 @@ const passwordField = z
   .min(1, "Password is required")
   .min(6, "Password must be at least 6 characters");
 
-export const userRoleEnum = z.enum(["ADMIN", "USER"]);
+export const userRoleEnum = z.enum(["ADMIN", "CUSTOMER"]);
 export type UserRoleInput = z.infer<typeof userRoleEnum>;
 
 // ---- Login ----
