@@ -48,6 +48,10 @@ public class SuccessResponse<T> {
         return build(HttpStatus.OK, message, data, "Request completed successfully");
     }
 
+    public static <T> ResponseEntity<SuccessResponse<T>> ok(String message) {
+        return build(HttpStatus.OK, message, null, "Request completed successfully");
+    }
+
     public static <T> ResponseEntity<SuccessResponse<T>> created(T data, String message) {
         return build(HttpStatus.CREATED, message, data, "Resource created successfully");
     }
