@@ -46,8 +46,8 @@ public class UserService {
         }
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found with id "+id));
-        user.setFirstName(updateUserRequest.getFirstName());
-        user.setLastName(updateUserRequest.getLastName());
+        user.setName(updateUserRequest.getName());
+        user.setPassword(updateUserRequest.getPassword());
         userRepository.save(user);
         return modelMapper.map(user, UserResponse.class);
     }
