@@ -12,8 +12,10 @@ export function useLoginMutation() {
 
   return useMutation({
     mutationFn: loginRequest,
-    onSuccess: ({ accessToken, user }) => {
-      dispatch(setCredentials({ accessToken, user }));
+    onSuccess: (data: LoginResponse) => {
+      const token = data.data.accessToken;
+      const user = data.data.user;
+      dispatch(setCredentials({ accessToken: token, user }));
       toast.success(`Welcome back, ${user.name || user.email}!`);
       router.replace(user.role === "ADMIN" ? "/admin/dashboard" : "/");
     },
@@ -26,15 +28,15 @@ export function useLoginMutation() {
 }
 
 export function useRegisterMutation() {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const router = useRouter();
 
   return useMutation({
     mutationFn: registerRequest,
-    onSuccess: ({ accessToken, user }) => {
-      dispatch(setCredentials({ accessToken, user }));
-      toast.success("Account created successfully!");
-      router.replace("/");
+    onSuccess: (data: ApiResponse<AuthUser>) => {
+      // dispatch(setCredentials({ accessToken, user }));
+      toast.success(data.message ?? "Account created successfully!");
+      router.replace("/login");
     },
     onError: (error: any) => {
       const message =

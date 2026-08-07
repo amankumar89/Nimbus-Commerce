@@ -52,6 +52,8 @@ function processQueue(error: unknown, token: string | null) {
 }
 
 async function refreshAccessToken(): Promise<string> {
+  console.log('refreshAccessToken');
+
   const response = await refreshClient.post("/auth/refresh");
   const newAccessToken: string = response.data.accessToken;
   store.dispatch(setAccessToken(newAccessToken));
