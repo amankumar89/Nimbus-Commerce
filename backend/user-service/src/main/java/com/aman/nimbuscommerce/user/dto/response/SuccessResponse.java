@@ -44,7 +44,7 @@ public class SuccessResponse<T> {
         );
     }
 
-    public static <T> ResponseEntity<SuccessResponse<T>> ok(T data, String message) {
+    public static <T> ResponseEntity<SuccessResponse<T>> ok(String message, T data) {
         return build(HttpStatus.OK, message, data, "Request completed successfully");
     }
 

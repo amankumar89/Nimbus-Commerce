@@ -15,19 +15,19 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
     @GetMapping("/me")
     public ResponseEntity<SuccessResponse<UserResponse>> getUserProfile(){
-        return SuccessResponse.ok(userService.userProfile(), "User fetched");
+        return SuccessResponse.ok("User fetched", userService.userProfile());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<SuccessResponse<UserResponse>> getUserProfile(@PathVariable UUID id){
-        return SuccessResponse.ok(userService.userProfileById(id),"User fetched with id "+id);
+        return SuccessResponse.ok("User fetched with id "+id, userService.userProfileById(id));
     }
 
     @PutMapping("/me/{id}")
@@ -35,18 +35,18 @@ public class UserController {
             @PathVariable UUID id,
             @Valid @RequestBody UpdateUserRequest updateUserRequest
             ){
-        return SuccessResponse.ok(userService.updateUser(id, updateUserRequest),"User updated");
+        return SuccessResponse.ok("User updated", userService.updateUser(id, updateUserRequest));
     }
 
     @PostMapping("/addresses")
     public ResponseEntity<SuccessResponse<AddressResponse>> addUserAddress(
             @Valid @RequestBody AddressRequest addressRequest
             ){
-        return SuccessResponse.ok(userService.addAddress(addressRequest), "Address added");
+        return SuccessResponse.ok("Address added", userService.addAddress(addressRequest));
     }
 
     @GetMapping("/addresses")
     public ResponseEntity<SuccessResponse<List<AddressResponse>>> getAllAddress(){
-        return SuccessResponse.ok(userService.listAddress(), "Address fetched");
+        return SuccessResponse.ok("Address fetched", userService.listAddress());
     }
 }
