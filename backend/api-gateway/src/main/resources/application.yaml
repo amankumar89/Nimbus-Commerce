@@ -57,5 +57,10 @@ management:
       exposure:
         include: health,info
 
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    com.aman.nimbus.apigateway: DEBUG
+
 jwt:
   secret: ${JWT_SECRET:9e,I=,b+1y(P<**Oe>Am[,yd)FmBn@e/YU;^|5vDdb[I@|W%#LCsEDdQXRm;YD5I}
