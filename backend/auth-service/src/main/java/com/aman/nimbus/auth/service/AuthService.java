@@ -1,9 +1,10 @@
 package com.aman.nimbus.auth.service;
 
 import com.aman.nimbus.auth.dto.*;
-        import com.aman.nimbus.auth.entity.RefreshToken;
+import com.aman.nimbus.auth.entity.RefreshToken;
 import com.aman.nimbus.auth.entity.User;
 import com.aman.nimbus.auth.exception.BadRequestException;
+import com.aman.nimbus.auth.exception.DuplicateException;
 import com.aman.nimbus.auth.exception.UnauthorizedException;
 import com.aman.nimbus.auth.repository.RefreshTokenRepository;
 import com.aman.nimbus.auth.repository.UserRepository;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Service
 @RequiredArgsConstructor
@@ -36,15 +39,13 @@ public class AuthService {
     @Transactional
     public AuthResult register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new BadRequestException("An account with this email already exists");
+            throw new DuplicateException("An account with this email already exists");
         }
 
         User user = modelMapper.map(request, User.class);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        User saved = userRepository.save(user);
-        System.out.println("user" +saved.getCreatedAt());
-        System.out.println("user" +saved.getUpdatedAt());
+        User saved = userRepository.saveAndFlush(user);
         return issueTokens(saved);
     }
 
@@ -75,7 +76,7 @@ public class AuthService {
         RefreshToken storedToken = refreshTokenRepository.findByTokenHash(hash)
                 .orElseThrow(() -> new UnauthorizedException("Invalid refresh token"));
 
-        if (storedToken.isRevoked() || storedToken.getExpiresAt().isBefore(Instant.now())) {
+        if (storedToken.isRevoked() || storedToken.getExpiresAt().isBefore(LocalDateTime.now())) {
             throw new UnauthorizedException("Refresh token expired or revoked");
         }
 
@@ -104,7 +105,10 @@ public class AuthService {
         RefreshToken refreshTokenEntity = new RefreshToken();
         refreshTokenEntity.setUser(user);
         refreshTokenEntity.setTokenHash(refreshTokenUtil.hash(rawRefreshToken));
-        refreshTokenEntity.setExpiresAt(Instant.now().plusMillis(refreshTokenExpiryMs));
+        refreshTokenEntity.setExpiresAt(
+                LocalDateTime
+                        .ofInstant(Instant.now().plusMillis(refreshTokenExpiryMs), ZoneId.systemDefault())
+        );
         refreshTokenRepository.save(refreshTokenEntity);
         UserDto userDto = modelMapper.map(user, UserDto.class);
         return new AuthResult(accessToken, rawRefreshToken, userDto);

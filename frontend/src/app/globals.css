@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  /* Navy blue scale */
+  --color-navy-50:  #eef2f9;
+  --color-navy-100: #d6e0f0;
+  --color-navy-200: #adc1e1;
+  --color-navy-300: #84a2d2;
+  --color-navy-400: #5b83c3;
+  --color-navy-500: #3a63a8;
+  --color-navy-600: #2c4c84;
+  --color-navy-700: #1f3660;   /* primary brand */
+  --color-navy-800: #14243f;
+  --color-navy-900: #0a1220;
+  --color-navy-950: #05090f;
+
+  --color-accent: #3a63a8;     /* actions, links, buttons */
+  --color-danger: #dc2626;
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+/* Light theme (default) */
+:root {
+  --color-bg: #ffffff;
+  --color-surface: #f5f7fb;
+  --color-text: #0a1220;
+  --color-text-muted: #4b5a72;
+  --color-border: #d6e0f0;
+}
+
+/* Dark theme */
+.dark {
+  --color-bg: #05090f;
+  --color-surface: #0a1220;
+  --color-text: #eef2f9;
+  --color-text-muted: #adc1e1;
+  --color-border: #14243f;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}

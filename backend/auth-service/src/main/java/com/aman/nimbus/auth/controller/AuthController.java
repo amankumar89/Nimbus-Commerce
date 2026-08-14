@@ -25,36 +25,52 @@ public class AuthController {
     private long refreshTokenExpiryMs;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request, HttpServletResponse response) {
+    public ResponseEntity<SuccessResponse<AuthResponse>> register(
+            @Valid @RequestBody RegisterRequest request,
+            HttpServletResponse response) {
         var result = authService.register(request);
         setRefreshCookie(response, result.rawRefreshToken());
-        return ResponseEntity.ok(new AuthResponse(result.accessToken(), result.userDto()));
+        return SuccessResponse.created(
+                "Registered successfully",
+                new AuthResponse(result.accessToken(), result.userDto()));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request, HttpServletResponse response) {
+    public ResponseEntity<SuccessResponse<AuthResponse>> login(
+            @Valid @RequestBody LoginRequest request,
+            HttpServletResponse response) {
         var result = authService.login(request);
         setRefreshCookie(response, result.rawRefreshToken());
-        return ResponseEntity.ok(new AuthResponse(result.accessToken(), result.userDto()));
+        return SuccessResponse.ok(
+                "Logged in successfully",
+                new AuthResponse(result.accessToken(), result.userDto()));
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<AuthResponse> refresh(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<SuccessResponse<AuthResponse>> refresh(
+            HttpServletRequest request,
+            HttpServletResponse response) {
         String rawRefreshToken = extractRefreshCookie(request);
         var result = authService.refresh(rawRefreshToken);
         setRefreshCookie(response, result.rawRefreshToken());
-        return ResponseEntity.ok(new AuthResponse(result.accessToken(), result.userDto()));
+        return SuccessResponse.ok(
+                "Token refreshed successfully",
+                new AuthResponse(result.accessToken(), result.userDto()));
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<SuccessResponse<Void>> logout(
+            HttpServletRequest request,
+            HttpServletResponse response) {
         String rawRefreshToken = extractRefreshCookie(request);
         authService.logout(rawRefreshToken);
         clearRefreshCookie(response);
-        return ResponseEntity.ok().build();
+        return SuccessResponse.ok("Logged out successfully");
     }
 
-    private void setRefreshCookie(HttpServletResponse response, String rawToken) {
+    private void setRefreshCookie(
+            HttpServletResponse response,
+            String rawToken) {
         ResponseCookie cookie = ResponseCookie.from(refreshCookieName, rawToken)
                 .httpOnly(true)
                 .secure(false) // set true in production (HTTPS only)

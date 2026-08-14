@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -25,10 +25,10 @@ public class RefreshToken {
     @Column(unique = true, nullable = false, length = 512)
     private String tokenHash;
 
-    private Instant expiresAt;
+    private LocalDateTime expiresAt;
 
     private boolean revoked = false;
 
     @CreationTimestamp
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 }

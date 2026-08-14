@@ -3,7 +3,7 @@ package com.aman.nimbus.auth.dto;
 import com.aman.nimbus.auth.entity.Role;
 import lombok.*;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 
@@ -17,6 +17,6 @@ public class UserDto {
     private String email;
     private Role role;
     private boolean enabled;
-    private Instant createdAt;
-    private Instant updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
