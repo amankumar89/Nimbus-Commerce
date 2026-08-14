@@ -82,9 +82,9 @@ axiosInstance.interceptors.response.use(
     if (!isUnauthorized || isRefreshCall || originalRequest._retry) {
       if (!shouldSkipTokenRefresh(originalRequest.url) && isUnauthorized && (isRefreshCall || originalRequest?._retry)) {
         store.dispatch(logout());
-        if (typeof window !== "undefined") {
-          window.location.href = "/login";
-        }
+        // if (typeof window !== "undefined") {
+        //   window.location.href = "/login";
+        // }
       }
       return Promise.reject(error);
     }

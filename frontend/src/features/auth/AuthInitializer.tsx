@@ -23,6 +23,7 @@ function AuthInitializer({
       try {
         const { data: { accessToken, user } } = await silentRefresh();
         dispatch(setCredentials({ accessToken, user }));
+        // router.replace(user.role === 'ADMIN' ? "/admin/dashboard" : "/")
       } catch {
         dispatch(logout());
         // router.replace("/login");
