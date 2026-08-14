@@ -1,3 +1,4 @@
+import { products } from "@/data";
 import axiosInstance from "@/lib/axios";
 
 export type ProductPayload = Omit<Product, "id" | "rating" | "reviewCount">;
@@ -5,10 +6,11 @@ export type ProductPayload = Omit<Product, "id" | "rating" | "reviewCount">;
 export async function getAdminProducts(
   params: ProductListParams
 ): Promise<PaginatedResponse<Product>> {
-  const { data } = await axiosInstance.get<PaginatedResponse<Product>>("/admin/products", {
-    params,
-  });
-  return data;
+  // const { data } = await axiosInstance.get<PaginatedResponse<Product>>("/admin/products", {
+  //   params,
+  // });
+  // return data;
+  return { items: products };
 }
 
 export async function createProduct(payload: ProductPayload): Promise<Product> {

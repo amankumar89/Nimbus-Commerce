@@ -1,12 +1,14 @@
+import { orders } from "@/data";
 import axiosInstance from "@/lib/axios";
 
 export async function getAdminOrders(
   params: AdminOrderListParams
 ): Promise<PaginatedResponse<AdminOrder>> {
-  const { data } = await axiosInstance.get<PaginatedResponse<AdminOrder>>("/admin/orders", {
-    params,
-  });
-  return data;
+  // const { data } = await axiosInstance.get<PaginatedResponse<AdminOrder>>("/admin/orders", {
+  //   params,
+  // });
+  return { items: orders };
+  // return data;
 }
 
 export async function updateOrderStatus(
