@@ -2,16 +2,16 @@
 
 import { useEffect, useRef } from "react";
 import { useAppDispatch } from "@/store/hooks";
-import { setCredentials, authCheckComplete } from "@/store/slices/authSlice";
+import { setCredentials, logout } from "@/store/slices/authSlice";
 import { silentRefresh } from "@/features/auth/api";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
-export default function AuthInitializer({
+function AuthInitializer({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
+  // const router = useRouter();
   const dispatch = useAppDispatch();
   const hasRun = useRef(false);
 
@@ -24,11 +24,13 @@ export default function AuthInitializer({
         const { data: { accessToken, user } } = await silentRefresh();
         dispatch(setCredentials({ accessToken, user }));
       } catch {
-        dispatch(authCheckComplete());
-        router.replace("/login");
+        dispatch(logout());
+        // router.replace("/login");
       }
     })();
-  }, [dispatch, router]);
+  }, [dispatch]);
 
   return <>{children}</>;
 }
+
+export default AuthInitializer;

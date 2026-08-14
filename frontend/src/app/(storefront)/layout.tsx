@@ -1,4 +1,6 @@
 import AuthGate from "@/features/auth/AuthGate";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 export default function StorefrontLayout({
   children,
@@ -7,9 +9,9 @@ export default function StorefrontLayout({
 }) {
   return (
     <AuthGate mode="public">
-      {/* Header component goes here later */}
-      <main className="min-h-screen bg-[var(--color-bg)]">{children}</main>
-      {/* Footer component goes here later */}
+      <Header />
+      <main className="min-h-screen bg-(--color-bg)">{children}</main>
+      <Footer />
     </AuthGate>
   );
 }

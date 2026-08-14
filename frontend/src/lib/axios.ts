@@ -3,7 +3,18 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import { store } from "@/store";
-import { setAccessToken, logout } from "@/store/slices/authSlice";
+import { logout, setCredentials } from "@/store/slices/authSlice";
+
+function shouldSkipTokenRefresh(url: string | undefined): boolean {
+  if (!url) return false;
+
+  const authEndpoints = [
+    "auth/login",
+    "auth/register",
+  ];
+
+  return authEndpoints.some((endpoint) => url.includes(endpoint));
+}
 
 interface RetryableRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -52,12 +63,14 @@ function processQueue(error: unknown, token: string | null) {
 }
 
 async function refreshAccessToken(): Promise<string> {
-  console.log('refreshAccessToken');
-
   const response = await refreshClient.post("/auth/refresh");
-  const newAccessToken: string = response.data.accessToken;
-  store.dispatch(setAccessToken(newAccessToken));
-  return newAccessToken;
+  const accessToken: string = response.data.accessToken;
+  const user: AuthUser = response.data.user;
+  store.dispatch(setCredentials({
+    accessToken,
+    user
+  }));
+  return accessToken;
 }
 
 axiosInstance.interceptors.response.use(
@@ -67,7 +80,7 @@ axiosInstance.interceptors.response.use(
     const isUnauthorized = error.response?.status === 401;
     const isRefreshCall = originalRequest?.url?.includes("/auth/refresh");
     if (!isUnauthorized || isRefreshCall || originalRequest._retry) {
-      if (isUnauthorized && (isRefreshCall || originalRequest?._retry)) {
+      if (!shouldSkipTokenRefresh(originalRequest.url) && isUnauthorized && (isRefreshCall || originalRequest?._retry)) {
         store.dispatch(logout());
         if (typeof window !== "undefined") {
           window.location.href = "/login";
@@ -93,6 +106,8 @@ axiosInstance.interceptors.response.use(
     isRefreshing = true;
 
     try {
+      if (shouldSkipTokenRefresh(originalRequest.url)) return;
+
       const newToken = await refreshAccessToken();
       processQueue(null, newToken);
       originalRequest.headers.Authorization = `Bearer ${newToken}`;
@@ -100,9 +115,9 @@ axiosInstance.interceptors.response.use(
     } catch (refreshError) {
       processQueue(refreshError, null);
       store.dispatch(logout());
-      if (typeof window !== "undefined") {
-        window.location.href = "/login";
-      }
+      // if (typeof window !== "undefined") {
+      //   window.location.href = "/login";
+      // }
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;

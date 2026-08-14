@@ -26,8 +26,8 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-[var(--color-text)]">Welcome back</h1>
-        <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+        <h1 className="text-2xl font-bold text-(--color-text)">Welcome back</h1>
+        <p className="mt-1 text-sm text-(--color-text-muted)">
           Sign in to continue to Nimbus
         </p>
       </div>
@@ -123,7 +123,7 @@ export default function LoginPage() {
         </form.Subscribe>
       </form>
 
-      <p className="text-center text-sm text-[var(--color-text-muted)]">
+      <p className="text-center text-sm text-(--color-text-muted)">
         Don&apos;t have an account?{" "}
         <Link href="/register" className="font-semibold text-navy-600 hover:text-navy-700 dark:text-navy-300">
           Create one
