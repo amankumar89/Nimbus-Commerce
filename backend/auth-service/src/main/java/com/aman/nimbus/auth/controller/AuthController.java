@@ -6,11 +6,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -28,6 +30,7 @@ public class AuthController {
     public ResponseEntity<SuccessResponse<AuthResponse>> register(
             @Valid @RequestBody RegisterRequest request,
             HttpServletResponse response) {
+        log.info("POST /auth/register : AuthController");
         var result = authService.register(request);
         setRefreshCookie(response, result.rawRefreshToken());
         return SuccessResponse.created(
@@ -39,6 +42,7 @@ public class AuthController {
     public ResponseEntity<SuccessResponse<AuthResponse>> login(
             @Valid @RequestBody LoginRequest request,
             HttpServletResponse response) {
+        log.info("POST /auth/login : AuthController");
         var result = authService.login(request);
         setRefreshCookie(response, result.rawRefreshToken());
         return SuccessResponse.ok(
@@ -50,6 +54,7 @@ public class AuthController {
     public ResponseEntity<SuccessResponse<AuthResponse>> refresh(
             HttpServletRequest request,
             HttpServletResponse response) {
+        log.info("POST /auth/refresh : AuthController");
         String rawRefreshToken = extractRefreshCookie(request);
         var result = authService.refresh(rawRefreshToken);
         setRefreshCookie(response, result.rawRefreshToken());
@@ -62,6 +67,7 @@ public class AuthController {
     public ResponseEntity<SuccessResponse<Void>> logout(
             HttpServletRequest request,
             HttpServletResponse response) {
+        log.info("POST /auth/logout : AuthController");
         String rawRefreshToken = extractRefreshCookie(request);
         authService.logout(rawRefreshToken);
         clearRefreshCookie(response);
