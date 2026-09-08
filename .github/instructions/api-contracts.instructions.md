@@ -1,80 +1,43 @@
 ---
-applyTo: "**/*Controller.java,**/api/**,**/*Api.ts,**/*api.ts,**/*client.ts,**/*schema.ts"
+applyTo: "**/*Controller.java,**/api/**,**/*Api.ts,**/*api.ts,**/*client.ts,**/*schema.ts,**/*schemas.ts,**/application.yaml"
 ---
 
 # Nimbus Commerce API Contract Instructions
 
 ## Contract-First Mindset
 
-API changes affect multiple independently evolving components.
+A contract change can touch:
 
-A change may impact:
+Browser → frontend feature `api.ts` / Zod schema → Axios/auth → API Gateway routes → domain service controller/DTO → persistence or events.
 
-Browser
-→ frontend API client
-→ Axios/auth handling
-→ API Gateway
-→ domain service
-→ persistence and downstream behavior.
-
-Before changing an API contract, inspect all affected layers.
+Inspect every affected layer before editing.
 
 ## Contract Changes
 
-When modifying a request or response:
-
-1. Identify all consumers.
-2. Identify existing types or schemas.
-3. Check gateway compatibility.
-4. Update backend response models.
-5. Update frontend parsing and validation.
+1. Identify consumers (frontend features, admin UI, other services).
+2. Identify existing TypeScript types/Zod schemas and Java request/response models.
+3. Check `api-gateway` `Path=` predicates and HTTP methods.
+4. Update backend DTOs and validation.
+5. Update frontend parsing, hooks, and React Query keys.
 6. Update tests.
-7. Check authentication interceptors if the endpoint participates in auth.
+7. If the endpoint is auth-related, check login, register, refresh, Axios interceptor, and `AuthInitializer`.
 
-Do not update only one side of a known shared contract.
+Do not update only one side of a shared contract.
 
 ## Response Consistency
 
-Use predictable response shapes.
-
-Do not introduce inconsistent wrappers for similar operations without a strong reason.
-
-When working on authentication responses, explicitly verify:
-
-* Login response.
-* Registration response.
-* Refresh response.
-* Axios interceptor parsing.
-* Startup authentication initialization.
+Keep wrappers and field names consistent across similar operations. Auth responses must stay aligned across all token-refresh paths.
 
 ## Error Contracts
 
-Frontend and backend should agree on meaningful error behavior.
-
-Do not make the frontend depend on undocumented exception text.
-
-Prefer stable error structures and explicit error categories.
+Frontend should not parse undocumented exception messages. Prefer stable error bodies and explicit categories.
 
 ## Gateway Compatibility
 
-A service endpoint is not automatically reachable from the frontend.
+A controller mapping is not reachable from the UI until the gateway exposes it.
 
-Verify:
-
-* Gateway path mapping.
-* Service registration.
-* HTTP method.
-* Path parameters.
-* Authentication behavior.
-* CORS implications where relevant.
+Verify path mapping, service name (`lb://SERVICE-NAME`), method, path parameters, auth filters, and CORS when relevant.
 
 ## Versioning and Breaking Changes
 
-Avoid breaking existing frontend or service consumers unnecessarily.
-
-For breaking changes:
-
-* Identify consumers.
-* Update them together where possible.
-* Add migration compatibility only when justified.
-* Document remaining compatibility limitations.
+Avoid breaking the Next.js client or other services. Update consumers in the same change when possible. Document remaining incompatibilities.

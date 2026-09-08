@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -14,12 +13,13 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserEvent {
 
+    private int eventVersion;
     private String eventType; // USER_REGISTERED, USER_UPDATED, USER_STATUS_CHANGED
     private UUID userId;
     private String name;
     private String email;
     private Role role;
     private boolean enabled;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Instant createdAt;
+    private Instant updatedAt;
 }

@@ -45,8 +45,7 @@ Prefer the smallest architecture that correctly supports the current workflow.
 Return:
 
 ### Summary
-tools: [read, search]
----
+
 Brief description of the architectural fit.
 
 ### Findings

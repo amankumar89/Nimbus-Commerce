@@ -1,130 +1,71 @@
 ---
-applyTo: "frontend/**,**/*.tsx,**/*.ts"
+applyTo: "frontend/**"
 ---
 
 # Nimbus Commerce Frontend Instructions
 
 ## Technology
 
-The frontend uses:
+The frontend lives in `frontend/` and uses:
 
-* Next.js.
-* React.
-* TypeScript.
-* Redux Toolkit.
-* TanStack React Query.
-* Axios.
-* Zod.
-* Tailwind CSS.
+* Next.js 15 App Router (`frontend/src/app`).
+* React 19 and TypeScript (strict).
+* Tailwind CSS 4.
+* Redux Toolkit (auth credentials and authenticated user).
+* TanStack React Query (server data).
+* TanStack React Form and Zod.
+* Axios (`frontend/src/lib/axios.ts`) through the API Gateway.
 
-Follow the existing domain-oriented module structure.
+Follow the existing domain-oriented layout: `features/`, `components/`, `app/` route groups `(storefront)`, `(auth)`, `(account)`, and `admin/`.
 
 ## State Ownership
 
-Use state management consistently.
+React Query owns server data, fetching, caching, invalidation, and remote request lifecycle.
 
-React Query owns:
+Redux currently owns authentication credentials and authenticated user state (`frontend/src/store`).
 
-* Server data.
-* Fetching.
-* Caching.
-* Invalidation.
-* Remote request lifecycle.
-
-Redux currently owns:
-
-* Authentication credentials.
-* Authenticated user state.
-
-Do not introduce duplicate ownership of the same state without a clear reason.
+Do not duplicate the same state in both layers without a clear reason.
 
 ## API Integration
 
-The frontend should integrate with backend services through the configured API Gateway.
+Call backend services through the configured API Gateway, not internal service ports.
 
-Before adding or modifying an API call:
+Before adding or changing an API call:
 
-1. Confirm the gateway route.
-2. Confirm the backend contract.
-3. Confirm request and response shapes.
-4. Confirm authentication requirements.
-5. Confirm error handling behavior.
+1. Confirm the gateway route in `backend/api-gateway`.
+2. Confirm the owning service contract.
+3. Confirm request and response shapes and Zod schemas.
+4. Confirm authentication (access token header, refresh cookie).
+5. Confirm error handling and toast/empty/loading states.
 
-Do not silently replace missing backend functionality with permanent frontend fixtures.
-
-If fixture data is being replaced, preserve useful loading, error, and empty states.
+Do not permanently replace missing backend behavior with fixtures. If replacing `frontend/src/data.ts` fixtures, keep loading, error, and empty states.
 
 ## Authentication
 
-The authentication flow includes:
+* Access tokens go in Authorization headers.
+* Refresh tokens stay in HTTP-only cookies (not JavaScript-readable storage).
+* Startup refresh: `AuthInitializer`.
+* Axios interceptors handle auth failures and refresh.
+* Middleware only checks refresh-cookie presence for protected prefixes; client `AuthGate` and backend authorization are authoritative.
 
-* Access tokens used in Authorization headers.
-* Refresh tokens stored in HTTP-only cookies.
-* Redux-backed access token and user state.
-* Startup refresh behavior.
-* Axios response interception for authentication failures.
-
-Be careful when modifying authentication code.
-
-Before changing auth behavior:
-
-* Inspect login/register responses.
-* Inspect startup refresh handling.
-* Inspect Axios refresh interceptor behavior.
-* Confirm response wrapper consistency.
-* Confirm concurrent refresh handling.
-* Avoid exposing refresh tokens to JavaScript.
-
-Do not change token or cookie behavior based only on assumptions.
+When changing auth, inspect login/register/refresh responses, interceptor parsing, and concurrent refresh. Do not change cookie flags from assumptions.
 
 ## Route Protection
 
-Middleware checks refresh-cookie presence for protected route prefixes.
-
-Client-side authentication and role checks provide authoritative application-level checks.
-
-Do not assume middleware alone performs complete authorization.
-
-Administrative features must verify the required authorization behavior rather than relying only on route naming.
+Administrative UI must still be authorized on the backend. Do not treat `/admin` naming as security.
 
 ## Feature Organization
 
-Prefer domain-oriented organization.
+Prefer feature modules: auth, products, cart, orders, user, address, wishlist, support, admin.
 
-Examples include:
-
-* auth
-* products
-* cart
-* orders
-* user
-* wishlist
-* support
-* admin
-
-Place shared and reusable presentation components in the established shared component structure.
-
-Avoid placing unrelated business logic inside generic UI components.
+Shared presentation stays in `components/` / `components/ui`. Keep business logic out of generic UI.
 
 ## Forms and Validation
 
-Use the project's validation approach consistently.
-
-Validate:
-
-* User input before submission where appropriate.
-* API responses when runtime validation is required.
-* Important assumptions at application boundaries.
-
-Do not duplicate validation logic unnecessarily between unrelated layers.
+Use Zod and the existing form field patterns. Validate user input at submit and validate important API boundaries. Do not duplicate the same rules in unrelated layers without cause.
 
 ## Completion
 
-Before finishing frontend work:
-
-* Check TypeScript errors.
-* Check affected routes.
-* Check loading, error, and empty states.
-* Check authentication implications.
-* Check responsive behavior when relevant.
-* Verify API contracts against the backend.
+* `npm run lint` in `frontend/`.
+* `npm run build` when the change can affect production output.
+* Check affected App Router routes, auth, loading/error/empty states, and contracts against the gateway and owning service.
