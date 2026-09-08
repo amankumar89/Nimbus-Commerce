@@ -1,0 +1,51 @@
+name: Bug report
+description: Report a defect in the Next.js app or a Spring Boot service
+labels: [bug]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Where the defect shows up.
+      options:
+        - Frontend (Next.js)
+        - api-gateway
+        - eureka-server
+        - auth-service
+        - user-service
+        - catalog-service
+        - cart-service
+        - order-service
+        - payment-service
+        - support-service
+        - Cross-cutting (gateway + service + UI)
+        - CI / tooling
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened
+      placeholder: Expected vs actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Environment and contract notes
+      description: Browser, local ports, gateway path, auth state, and whether fixture data or a real API is involved.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Redact secrets, tokens, and connection strings.

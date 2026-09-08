@@ -11,6 +11,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 public class UserEvent {
+    private int eventVersion;
     private String eventType;
     private UUID userId;
     private String name;
