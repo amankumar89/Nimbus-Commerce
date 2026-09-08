@@ -53,6 +53,9 @@ public class UserEventConsumer {
     }
 
     private void applyEvent(UserProfile profile, UserEvent event) {
+        if (profile.getCreatedAt() == null) {
+            profile.setCreatedAt(event.getCreatedAt());
+        }
         profile.setName(event.getName());
         profile.setEmail(event.getEmail());
         profile.setRole(Role.valueOf(event.getRole()));

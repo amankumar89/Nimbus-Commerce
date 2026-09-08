@@ -11,11 +11,12 @@ Never:
 * Commit secrets.
 * Copy existing secret values into documentation.
 * Echo credentials in logs.
-* Add real JWT secrets as defaults.
+* Add real JWT secrets as defaults (including gateway or auth YAML).
 * Hardcode database credentials.
 * Expose refresh tokens to frontend JavaScript.
+* Check in `*-dev.yaml` (these are gitignored).
 
-Use environment-based configuration or the established secret management approach.
+Use environment-based configuration or the established secret management approach. CI and Copilot output must redact any secret-shaped values as `[REDACTED]`.
 
 ## Authentication
 

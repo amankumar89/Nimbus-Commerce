@@ -1,0 +1,80 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /frontend
+    schedule:
+      interval: weekly
+    labels:
+      - dependencies
+      - frontend
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: maven
+    directory: /backend/eureka-server
+    schedule:
+      interval: weekly
+    labels: [dependencies, backend]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: maven
+    directory: /backend/api-gateway
+    schedule:
+      interval: weekly
+    labels: [dependencies, backend]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: maven
+    directory: /backend/auth-service
+    schedule:
+      interval: weekly
+    labels: [dependencies, backend]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: maven
+    directory: /backend/user-service
+    schedule:
+      interval: weekly
+    labels: [dependencies, backend]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: maven
+    directory: /backend/catalog-service
+    schedule:
+      interval: weekly
+    labels: [dependencies, backend]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: maven
+    directory: /backend/cart-service
+    schedule:
+      interval: weekly
+    labels: [dependencies, backend]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: maven
+    directory: /backend/order-service
+    schedule:
+      interval: weekly
+    labels: [dependencies, backend]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: maven
+    directory: /backend/payment-service
+    schedule:
+      interval: weekly
+    labels: [dependencies, backend]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: maven
+    directory: /backend/support-service
+    schedule:
+      interval: weekly
+    labels: [dependencies, backend]
+    open-pull-requests-limit: 5

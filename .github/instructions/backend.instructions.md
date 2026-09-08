@@ -1,131 +1,66 @@
 ---
-applyTo: "**/src/main/java/**,**/src/test/java/**,**/pom.xml"
+applyTo: "backend/**"
 ---
 
 # Nimbus Commerce Backend Instructions
 
 ## Technology Baseline
 
-Backend services use:
+Each service under `backend/` is its own Maven module (Java 21, Spring Boot 4, Spring Cloud where required). There is no reactor parent POM. Use that service's `./mvnw`.
 
-* Java 21.
-* Spring Boot.
-* Spring Cloud where required.
-* Spring Data/JPA where persistence is implemented.
-* PostgreSQL for relational persistence.
+* Spring Web MVC for domain services; Spring Cloud Gateway (WebFlux) for `api-gateway`.
+* Spring Data JPA and PostgreSQL when persistence exists.
+* Eureka clients register with `eureka-server`.
+* Kafka only where a real workflow already requires it; local broker is `backend/docker-compose.yaml`.
 
-Follow the conventions already established inside the service being modified.
-
-Do not introduce a new framework, persistence approach, or architectural pattern without a clear requirement.
+Follow conventions already used in the service you are changing. Do not add a new framework or persistence style without a clear requirement.
 
 ## Service Ownership
 
-Every new backend capability must have a clear owning service.
-
-Before implementation, answer:
+Every capability needs an owning service.
 
 1. Which domain owns this behavior?
-2. Does the service already expose related behavior?
-3. Does the API Gateway already route to this service?
-4. Does the service own its persistence?
-5. Does another service already own the data being considered?
+2. Does the service already expose related APIs?
+3. Does `api-gateway` already route to it?
+4. Does this service own the tables?
+5. Does another service already own the data?
 
-Do not solve cross-service communication by directly accessing another service's database.
+Never fix cross-service communication by sharing a database.
 
 ## Vertical Slice Structure
 
-For a new backend capability, prefer a complete vertical slice:
+Controller → validation/request model → application service → persistence → entity → response model → errors → tests.
 
-Controller
-→ validation/request model
-→ service/application logic
-→ persistence abstraction where required
-→ entity/domain model
-→ response model
-→ exception/error handling
-→ tests
-
-Do not create placeholder layers that contain no meaningful responsibility.
+Do not add empty layers.
 
 ## API Design
 
-Controllers should:
-
-* Be thin.
-* Validate external input.
-* Delegate business behavior to the appropriate application/service layer.
-* Return explicit request/response models where appropriate.
-* Avoid exposing persistence entities directly unless that is an established local convention.
-
-Business logic should not accumulate inside controllers.
+Controllers stay thin: validate input, delegate, return DTOs. Do not expose JPA entities unless that is already the local convention. Business rules do not live in controllers.
 
 ## Persistence
 
-When adding persistence:
-
-* Confirm service ownership first.
-* Keep entities private to the owning service.
-* Use migrations when the project's database migration approach is established.
-* Do not rely on automatic schema mutation as a long-term production strategy.
-* Avoid coupling multiple services to the same tables or schema without an explicit architectural decision.
+Confirm ownership first. Keep entities private to the service. `*-dev.yaml` is gitignored; do not commit real datasource credentials. Do not rely on schema auto-update as a long-term production strategy.
 
 ## Authentication and Authorization
 
-Auth-service owns authentication lifecycle concerns.
+auth-service owns credential and token lifecycle. Downstream services may receive identity from the gateway. Do not trust client-supplied user id or role headers as proof of identity unless they are produced by a trusted gateway filter you have verified.
 
-Downstream services may receive identity context through the gateway.
-
-Do not trust user identity or role information supplied directly by arbitrary client headers.
-
-When implementing authorization:
-
-* Verify the source of identity.
-* Enforce ownership where users access their own resources.
-* Enforce roles explicitly for administrative operations.
-* Avoid assuming that authentication automatically provides authorization.
+Enforce resource ownership for user data and explicit roles for admin APIs.
 
 ## Error Handling
 
-Use the service's established exception and error response conventions.
-
-Errors should:
-
-* Be meaningful to API consumers.
-* Avoid leaking secrets or internal implementation details.
-* Distinguish validation, authentication, authorization, not-found, and unexpected failures where appropriate.
+Follow the service's exception and error-body conventions. Do not leak secrets or stack traces to clients. Distinguish validation, authn, authz, not-found, and unexpected failures.
 
 ## Events and Kafka
 
-Kafka or asynchronous events should only be added when a real workflow requires them.
+Add Kafka only for a real workflow. Define producer, consumer, payload, and failure behavior first. Do not add broker configuration without corresponding produce/consume code. See also events instructions when editing Kafka types.
 
-Before adding an event:
+## Testing and CI
 
-1. Identify the producer.
-2. Identify consumers.
-3. Define the event contract.
-4. Define delivery/error expectations.
-5. Confirm local and deployment infrastructure support.
+`SpringBootTest` context tests typically need Postgres, Eureka, Kafka, and gitignored profiles. GitHub Actions packages each module with `-DskipTests`. Prefer focused unit/slice tests that do not require the full stack. When you add Testcontainers or test profiles, keep secrets out of source control.
 
-Do not add event configuration without corresponding behavior.
-
-## Testing
-
-When changing backend behavior:
-
-* Add or update focused tests.
-* Cover successful behavior.
-* Cover important validation and failure paths.
-* Add regression tests for bugs where practical.
-* Avoid tests tightly coupled to private implementation details.
+Validate locally with `./mvnw -B -DskipTests package` at minimum, and run tests when infrastructure is available.
 
 ## Final Review
 
-Before completion:
-
-* Review changed endpoints.
-* Check service ownership.
-* Check validation.
-* Check authorization.
-* Check persistence boundaries.
-* Run relevant tests.
-* Confirm no secrets were introduced.
+Changed endpoints, ownership, validation, authorization, persistence boundaries, no secrets, and gateway compatibility.
