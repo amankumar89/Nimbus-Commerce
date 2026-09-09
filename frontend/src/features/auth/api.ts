@@ -1,8 +1,6 @@
 import axiosInstance from "@/lib/axios";
 
 export async function silentRefresh(): Promise<ApiResponse<LoginResponse>> {
-  console.log('tttthere');
-
   const { data } = await axiosInstance.post<ApiResponse<LoginResponse>>("/auth/refresh");
   return data;
 }
