@@ -36,6 +36,7 @@ public class UserEventConsumer {
         }
 
         UserProfile profile = new UserProfile();
+        profile.setId(event.getUserId());
         applyEvent(profile, event);
         userProfileRepository.save(profile);
     }
