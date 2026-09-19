@@ -3,7 +3,7 @@ import Button from "@/components/ui/Button";
 
 export default function HeroBanner() {
   return (
-    <section className="relative overflow-hidden bg-primary-900">
+    <section className="relative overflow-hidden bg-primary-800">
       <div className="mx-auto flex max-w-7xl flex-col items-start gap-4 px-4 py-16 sm:py-24">
         <span className="rounded-full bg-primary-700/60 px-3 py-1 text-xs font-semibold text-primary-100">
           New Season Arrivals
