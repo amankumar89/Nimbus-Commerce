@@ -13,7 +13,7 @@ export default function ValueProps() {
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-8 sm:grid-cols-4">
         {ITEMS.map(({ icon: Icon, title, desc }) => (
           <div key={title} className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy-700 text-white">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-700 text-white">
               <Icon size={16} />
             </div>
             <div>

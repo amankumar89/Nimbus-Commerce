@@ -28,15 +28,15 @@ export default function DeliveryMethod({ selected, onSelect }: DeliveryMethodPro
           type="button"
           onClick={() => onSelect(option.id)}
           className={`flex items-center justify-between rounded-xl border p-4 text-left transition-colors ${selected === option.id
-            ? "border-navy-600 bg-navy-50 dark:bg-navy-900/40"
-            : "border-(--color-border) bg-(--color-bg) hover:border-navy-400"
+            ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40"
+            : "border-(--color-border) bg-(--color-bg) hover:border-primary-400"
             }`}
         >
           <div className="flex items-center gap-3">
             {option.id === "express" ? (
-              <Zap size={16} className="text-navy-600 dark:text-navy-300" />
+              <Zap size={16} className="text-primary-600 dark:text-primary-300" />
             ) : (
-              <Truck size={16} className="text-navy-600 dark:text-navy-300" />
+              <Truck size={16} className="text-primary-600 dark:text-primary-300" />
             )}
             <div>
               <p className="text-sm font-medium text-(--color-text)">{option.label}</p>

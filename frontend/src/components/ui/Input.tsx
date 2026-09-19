@@ -16,7 +16,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           placeholder:text-[var(--color-text-muted)]
           ${hasError
             ? "border-danger focus:border-danger focus:ring-2 focus:ring-danger/20"
-            : "border-[var(--color-border)] focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20"
+            : "border-[var(--color-border)] focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
           }
           ${className}`}
         {...props}

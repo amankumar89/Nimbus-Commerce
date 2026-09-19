@@ -28,7 +28,7 @@ export default function Modal({ isOpen, onClose, title, children, footer }: Moda
       {/* Backdrop */}
       <div
         onClick={onClose}
-        className="absolute inset-0 bg-navy-950/50 backdrop-blur-sm animate-in fade-in"
+        className="absolute inset-0 bg-primary-950/50 backdrop-blur-sm animate-in fade-in"
       />
 
       {/* Panel */}

@@ -36,7 +36,7 @@ export default function AdminSidebar() {
   return (
     <aside className="hidden w-60 shrink-0 flex-col gap-1 border-r border-(--color-border) bg-(--color-bg) p-4 lg:flex">
       <div className="mb-4 flex items-center gap-2 px-2">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy-700 text-sm font-bold text-white">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-700 text-sm font-bold text-white">
           N
         </div>
         <span className="text-base font-bold text-(--color-text)">Nimbus Admin</span>
@@ -49,7 +49,7 @@ export default function AdminSidebar() {
             key={href}
             href={href}
             className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${isActive
-              ? "bg-navy-700 text-white"
+              ? "bg-primary-700 text-white"
               : "text-(--color-text-muted) hover:bg-(--color-surface) hover:text-(--color-text)"
               }`}
           >

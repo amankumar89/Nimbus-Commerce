@@ -21,11 +21,11 @@ export default function ProductInfo({ product }: { product: Product }) {
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <p className="text-sm font-medium text-navy-600 dark:text-navy-300">{product.brand}</p>
+        <p className="text-sm font-medium text-primary-600 dark:text-primary-300">{product.brand}</p>
         <h1 className="mt-1 text-2xl font-bold text-(--color-text)">{product.name}</h1>
 
         <div className="mt-2 flex items-center gap-2">
-          <div className="flex items-center gap-1 rounded-md bg-navy-700 px-2 py-0.5 text-white">
+          <div className="flex items-center gap-1 rounded-md bg-primary-700 px-2 py-0.5 text-white">
             <Star size={12} className="fill-white" />
             <span className="text-xs font-semibold">{product.rating.toFixed(1)}</span>
           </div>
@@ -65,7 +65,7 @@ export default function ProductInfo({ product }: { product: Product }) {
           <div className="flex items-center rounded-lg border border-(--color-border)">
             <button
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              className="flex h-9 w-9 items-center justify-center text-(--color-text-muted) transition-colors hover:text-navy-600"
+              className="flex h-9 w-9 items-center justify-center text-(--color-text-muted) transition-colors hover:text-primary-600"
             >
               <Minus size={14} />
             </button>
@@ -74,7 +74,7 @@ export default function ProductInfo({ product }: { product: Product }) {
             </span>
             <button
               onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
-              className="flex h-9 w-9 items-center justify-center text-(--color-text-muted) transition-colors hover:text-navy-600"
+              className="flex h-9 w-9 items-center justify-center text-(--color-text-muted) transition-colors hover:text-primary-600"
             >
               <Plus size={14} />
             </button>
@@ -106,11 +106,11 @@ export default function ProductInfo({ product }: { product: Product }) {
 
       <div className="flex flex-col gap-2 rounded-xl bg-(--color-surface) p-4 text-sm">
         <div className="flex items-center gap-2 text-(--color-text-muted)">
-          <Truck size={15} className="text-navy-600 dark:text-navy-300" />
+          <Truck size={15} className="text-primary-600 dark:text-primary-300" />
           Free delivery on orders over ₹499
         </div>
         <div className="flex items-center gap-2 text-(--color-text-muted)">
-          <ShieldCheck size={15} className="text-navy-600 dark:text-navy-300" />
+          <ShieldCheck size={15} className="text-primary-600 dark:text-primary-300" />
           1 year warranty included
         </div>
       </div>

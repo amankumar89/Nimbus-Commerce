@@ -29,7 +29,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
           <div className="col-span-2">
             <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy-700 text-sm font-bold text-white">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-700 text-sm font-bold text-white">
                 N
               </div>
               <span className="text-lg font-bold text-(--color-text)">Nimbus</span>
@@ -42,7 +42,7 @@ export default function Footer() {
                 <a
                   key={i}
                   href="#"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-(--color-border) text-(--color-text-muted) transition-colors hover:border-navy-500 hover:text-navy-600 dark:hover:text-navy-300"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-(--color-border) text-(--color-text-muted) transition-colors hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-300"
                 >
                   <Icon size={14} />
                 </a>
@@ -57,7 +57,7 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-(--color-text-muted) transition-colors hover:text-navy-600 dark:hover:text-navy-300"
+                      className="text-sm text-(--color-text-muted) transition-colors hover:text-primary-600 dark:hover:text-primary-300"
                     >
                       {link.label}
                     </Link>
@@ -70,10 +70,10 @@ export default function Footer() {
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-(--color-border) pt-6 text-xs text-(--color-text-muted) sm:flex-row">
           <p>© {new Date().getFullYear()} Nimbus. All rights reserved.</p>
           <div className="flex gap-4">
-            <Link href="/privacy" className="hover:text-navy-600 dark:hover:text-navy-300">
+            <Link href="/privacy" className="hover:text-primary-600 dark:hover:text-primary-300">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-navy-600 dark:hover:text-navy-300">
+            <Link href="/terms" className="hover:text-primary-600 dark:hover:text-primary-300">
               Terms of Service
             </Link>
           </div>

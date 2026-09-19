@@ -26,7 +26,7 @@ export default function SortModalContent({ sortBy, direction, onSelect }: SortMo
             key={option.label}
             onClick={() => onSelect(option.sortBy, option.direction as "asc" | "desc")}
             className={`flex items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm transition-colors ${isActive
-              ? "bg-navy-50 font-semibold text-navy-700 dark:bg-navy-800 dark:text-navy-200"
+              ? "bg-primary-50 font-semibold text-primary-700 dark:bg-primary-800 dark:text-primary-200"
               : "text-(--color-text) hover:bg-(--color-surface)"
               }`}
           >

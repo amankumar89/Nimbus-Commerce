@@ -18,13 +18,13 @@ export default function ProductTabs({ description, specifications }: ProductTabs
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`relative pb-3 text-sm font-medium capitalize transition-colors ${activeTab === tab
-              ? "text-navy-700 dark:text-navy-300"
+              ? "text-primary-700 dark:text-primary-300"
               : "text-(--color-text-muted) hover:text-(--color-text)"
               }`}
           >
             {tab}
             {activeTab === tab && (
-              <span className="absolute -bottom-px left-0 h-0.5 w-full bg-navy-700 dark:bg-navy-300" />
+              <span className="absolute -bottom-px left-0 h-0.5 w-full bg-primary-700 dark:bg-primary-300" />
             )}
           </button>
         ))}

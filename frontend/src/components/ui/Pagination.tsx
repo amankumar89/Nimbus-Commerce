@@ -18,7 +18,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex h-9 w-9 items-center justify-center rounded-lg border border-(--color-border) text-(--color-text-muted) transition-colors hover:border-navy-500 disabled:opacity-40 disabled:hover:border-(--color-border)"
+        className="flex h-9 w-9 items-center justify-center rounded-lg border border-(--color-border) text-(--color-text-muted) transition-colors hover:border-primary-500 disabled:opacity-40 disabled:hover:border-(--color-border)"
       >
         <ChevronLeft size={16} />
       </button>
@@ -33,8 +33,8 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
             key={page}
             onClick={() => onPageChange(page as number)}
             className={`flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${page === currentPage
-              ? "bg-navy-700 text-white"
-              : "border border-(--color-border) text-(--color-text) hover:border-navy-500"
+              ? "bg-primary-700 text-white"
+              : "border border-(--color-border) text-(--color-text) hover:border-primary-500"
               }`}
           >
             {page}
@@ -45,7 +45,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="flex h-9 w-9 items-center justify-center rounded-lg border border-(--color-border) text-(--color-text-muted) transition-colors hover:border-navy-500 disabled:opacity-40 disabled:hover:border-[var(--color-border)]"
+        className="flex h-9 w-9 items-center justify-center rounded-lg border border-(--color-border) text-(--color-text-muted) transition-colors hover:border-primary-500 disabled:opacity-40 disabled:hover:border-[var(--color-border)]"
       >
         <ChevronRight size={16} />
       </button>

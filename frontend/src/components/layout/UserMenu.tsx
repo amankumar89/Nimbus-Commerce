@@ -49,7 +49,7 @@ export default function UserMenu() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-12 z-40 w-56 overflow-hidden rounded-xl border border-(--color-border) bg-(--color-bg) py-2 shadow-xl shadow-navy-900/10 animate-in fade-in slide-in-from-top-2">
+        <div className="absolute right-0 top-12 z-40 w-56 overflow-hidden rounded-xl border border-(--color-border) bg-(--color-bg) py-2 shadow-xl shadow-primary-900/10 animate-in fade-in slide-in-from-top-2">
           <div className="border-b border-(--color-border) px-4 py-3">
             <p className="truncate text-sm font-semibold text-(--color-text)">
               {user.name || "Nimbus User"}
@@ -65,7 +65,7 @@ export default function UserMenu() {
                 onClick={() => setIsOpen(false)}
                 className="flex items-center gap-3 px-4 py-2 text-sm text-(--color-text) transition-colors hover:bg-(--color-surface)"
               >
-                <Icon size={16} className="text-navy-600 dark:text-navy-300" />
+                <Icon size={16} className="text-primary-600 dark:text-primary-300" />
                 {label}
               </Link>
             ))}

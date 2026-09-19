@@ -18,7 +18,7 @@ export default function Header() {
     <header className="sticky top-0 z-30 border-b border-(--color-border) bg-(--color-bg)/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy-700 text-sm font-bold text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-700 text-sm font-bold text-white">
             N
           </div>
           <span className="text-lg font-bold tracking-tight text-(--color-text)">
@@ -34,7 +34,7 @@ export default function Header() {
             <input
               type="text"
               placeholder="Search products…"
-              className="w-full rounded-full border border-(--color-border) bg-(--color-surface) py-2 pl-9 pr-4 text-sm outline-none transition-colors focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20"
+              className="w-full rounded-full border border-(--color-border) bg-(--color-surface) py-2 pl-9 pr-4 text-sm outline-none transition-colors focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
             />
           </div>
         </div>
@@ -43,18 +43,18 @@ export default function Header() {
           {isAuthChecked && user && (
             <Link
               href="/wishlist"
-              className="hidden h-9 w-9 items-center justify-center rounded-full text-(--color-text-muted) transition-colors hover:bg-(--color-surface) hover:text-navy-600 sm:flex dark:hover:text-navy-300"
+              className="hidden h-9 w-9 items-center justify-center rounded-full text-(--color-text-muted) transition-colors hover:bg-(--color-surface) hover:text-primary-600 sm:flex dark:hover:text-primary-300"
             >
               <Heart size={17} />
             </Link>
           )}
           <Link
             href="/cart"
-            className="relative flex h-9 w-9 items-center justify-center rounded-full text-(--color-text-muted) transition-colors hover:bg-(--color-surface) hover:text-navy-600 dark:hover:text-navy-300"
+            className="relative flex h-9 w-9 items-center justify-center rounded-full text-(--color-text-muted) transition-colors hover:bg-(--color-surface) hover:text-primary-600 dark:hover:text-primary-300"
           >
             <ShoppingCart size={17} />
             {cartCount > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-navy-700 px-1 text-[10px] font-bold text-white">
+              <span className="absolute -right-1 -top-1 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-primary-700 px-1 text-[10px] font-bold text-white">
                 {cartCount > 99 ? "99+" : cartCount}
               </span>
             )}

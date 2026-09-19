@@ -27,7 +27,7 @@ export default function AdminCustomersPage() {
             setPage(1);
           }}
           placeholder="Search by name or email…"
-          className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) py-2 pl-9 pr-4 text-sm outline-none focus:border-navy-500"
+          className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) py-2 pl-9 pr-4 text-sm outline-none focus:border-primary-500"
         />
       </div>
       <div className="overflow-x-auto rounded-xl border border-(--color-border) bg-(--color-bg)">

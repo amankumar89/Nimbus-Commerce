@@ -27,8 +27,8 @@ export default function ProductFilters({
           <button
             onClick={() => onCategoryChange(undefined)}
             className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${!category
-              ? "border-navy-700 bg-navy-700 text-white"
-              : "border-(--color-border) text-(--color-text-muted) hover:border-navy-500"
+              ? "border-primary-700 bg-primary-700 text-white"
+              : "border-(--color-border) text-(--color-text-muted) hover:border-primary-500"
               }`}
           >
             All
@@ -38,8 +38,8 @@ export default function ProductFilters({
               key={cat}
               onClick={() => onCategoryChange(cat)}
               className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${category === cat
-                ? "border-navy-700 bg-navy-700 text-white"
-                : "border-(--color-border) text-(--color-text-muted) hover:border-navy-500"
+                ? "border-primary-700 bg-primary-700 text-white"
+                : "border-(--color-border) text-(--color-text-muted) hover:border-primary-500"
                 }`}
             >
               {cat}
@@ -56,7 +56,7 @@ export default function ProductFilters({
             placeholder="Min"
             value={minPrice}
             onChange={(e) => onMinPriceChange(e.target.value)}
-            className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-2.5 py-2 text-sm outline-none focus:border-navy-500"
+            className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-2.5 py-2 text-sm outline-none focus:border-primary-500"
           />
           <span className="text-(--color-text-muted)">–</span>
           <input
@@ -64,7 +64,7 @@ export default function ProductFilters({
             placeholder="Max"
             value={maxPrice}
             onChange={(e) => onMaxPriceChange(e.target.value)}
-            className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-2.5 py-2 text-sm outline-none focus:border-navy-500"
+            className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-2.5 py-2 text-sm outline-none focus:border-primary-500"
           />
         </div>
       </div>

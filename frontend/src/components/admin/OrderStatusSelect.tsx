@@ -13,8 +13,8 @@ const STATUSES: Order["status"][] = [
 
 const STATUS_STYLES: Record<string, string> = {
   DELIVERED: "bg-success/10 text-success border-success/30",
-  SHIPPED: "bg-navy-100 text-navy-700 border-navy-300 dark:bg-navy-800 dark:text-navy-300",
-  OUT_FOR_DELIVERY: "bg-navy-100 text-navy-700 border-navy-300 dark:bg-navy-800 dark:text-navy-300",
+  SHIPPED: "bg-primary-100 text-primary-700 border-primary-300 dark:bg-primary-800 dark:text-primary-300",
+  OUT_FOR_DELIVERY: "bg-primary-100 text-primary-700 border-primary-300 dark:bg-primary-800 dark:text-primary-300",
   PACKED: "bg-warning/10 text-warning border-warning/30",
   CONFIRMED: "bg-warning/10 text-warning border-warning/30",
   PENDING: "bg-(--color-surface) text-(--color-text-muted) border-(--color-border)",

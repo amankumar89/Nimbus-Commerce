@@ -45,7 +45,7 @@ export default function AdminOrdersPage() {
               setPage(1);
             }}
             placeholder="Search by order ID or customer…"
-            className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) py-2 pl-9 pr-4 text-sm outline-none focus:border-navy-500"
+            className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) py-2 pl-9 pr-4 text-sm outline-none focus:border-primary-500"
           />
         </div>
 
@@ -58,8 +58,8 @@ export default function AdminOrdersPage() {
                 setPage(1);
               }}
               className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${statusFilter === status
-                ? "border-navy-700 bg-navy-700 text-white"
-                : "border-(--color-border) text-(--color-text-muted) hover:border-navy-500"
+                ? "border-primary-700 bg-primary-700 text-white"
+                : "border-(--color-border) text-(--color-text-muted) hover:border-primary-500"
                 }`}
             >
               {status === "ALL" ? "All" : status.replace(/_/g, " ")}
@@ -95,7 +95,7 @@ export default function AdminOrdersPage() {
                   <td className="px-4 py-3">
                     <Link
                       href={`/track-order/${order.id}`}
-                      className="font-medium text-navy-600 hover:underline dark:text-navy-300"
+                      className="font-medium text-primary-600 hover:underline dark:text-primary-300"
                     >
                       #{order.id}
                     </Link>

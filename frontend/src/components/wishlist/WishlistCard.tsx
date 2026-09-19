@@ -28,7 +28,7 @@ export default function WishlistCard({ item }: { item: WishlistItem }) {
       <div className="flex flex-1 flex-col gap-2 p-3">
         <Link
           href={`/products/${item.productId}`}
-          className="line-clamp-2 text-sm font-medium text-(--color-text) hover:text-navy-600 dark:hover:text-navy-300"
+          className="line-clamp-2 text-sm font-medium text-(--color-text) hover:text-primary-600 dark:hover:text-primary-300"
         >
           {item.name}
         </Link>
@@ -45,7 +45,7 @@ export default function WishlistCard({ item }: { item: WishlistItem }) {
         <button
           onClick={() => addToCart.mutate({ productId: item.productId, quantity: 1 })}
           disabled={addToCart.isPending}
-          className="mt-auto flex items-center justify-center gap-2 rounded-lg bg-navy-700 py-2 text-xs font-semibold text-white transition-colors hover:bg-navy-800 disabled:opacity-60"
+          className="mt-auto flex items-center justify-center gap-2 rounded-lg bg-primary-700 py-2 text-xs font-semibold text-white transition-colors hover:bg-primary-800 disabled:opacity-60"
         >
           <ShoppingCart size={14} />
           Add to Cart

@@ -24,7 +24,7 @@ export default function AccountSidebar() {
             key={href}
             href={href}
             className={`flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-colors ${isActive
-              ? "bg-navy-700 text-white"
+              ? "bg-primary-700 text-white"
               : "text-(--color-text-muted) hover:bg-(--color-surface) hover:text-(--color-text)"
               }`}
           >

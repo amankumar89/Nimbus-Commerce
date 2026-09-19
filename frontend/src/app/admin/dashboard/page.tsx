@@ -8,8 +8,8 @@ import Skeleton from "@/components/ui/Skeleton";
 
 const STATUS_STYLES: Record<string, string> = {
   DELIVERED: "bg-success/10 text-success",
-  SHIPPED: "bg-navy-100 text-navy-700 dark:bg-navy-800 dark:text-navy-300",
-  OUT_FOR_DELIVERY: "bg-navy-100 text-navy-700 dark:bg-navy-800 dark:text-navy-300",
+  SHIPPED: "bg-primary-100 text-primary-700 dark:bg-primary-800 dark:text-primary-300",
+  OUT_FOR_DELIVERY: "bg-primary-100 text-primary-700 dark:bg-primary-800 dark:text-primary-300",
   PACKED: "bg-warning/10 text-warning",
   CONFIRMED: "bg-warning/10 text-warning",
   PENDING: "bg-(--color-surface) text-(--color-text-muted)",
@@ -65,7 +65,7 @@ export default function AdminDashboardPage() {
             <h2 className="text-base font-semibold text-(--color-text)">Recent Orders</h2>
             <Link
               href="/admin/orders"
-              className="text-xs font-medium text-navy-600 hover:text-navy-700 dark:text-navy-300"
+              className="text-xs font-medium text-primary-600 hover:text-primary-700 dark:text-primary-300"
             >
               View All
             </Link>
@@ -112,7 +112,7 @@ export default function AdminDashboardPage() {
                 <Link
                   key={product.id}
                   href="/admin/products"
-                  className="flex items-center justify-between text-sm hover:text-navy-600 dark:hover:text-navy-300"
+                  className="flex items-center justify-between text-sm hover:text-primary-600 dark:hover:text-primary-300"
                 >
                   <span className="line-clamp-1 text-(--color-text)">{product.name}</span>
                   <span className="shrink-0 font-semibold text-warning">{product.stock} left</span>

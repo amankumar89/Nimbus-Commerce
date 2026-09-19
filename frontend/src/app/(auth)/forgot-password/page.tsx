@@ -29,9 +29,9 @@ export default function ForgotPasswordPage() {
   if (submitted) {
     return (
       <div className="flex flex-col items-center gap-4 text-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-navy-50 dark:bg-navy-800">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-50 dark:bg-primary-800">
           <svg
-            className="h-7 w-7 text-navy-700 dark:text-navy-200"
+            className="h-7 w-7 text-primary-700 dark:text-primary-200"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -51,7 +51,7 @@ export default function ForgotPasswordPage() {
         </p>
         <Link
           href="/login"
-          className="mt-2 text-sm font-semibold text-navy-600 hover:text-navy-700 dark:text-navy-300"
+          className="mt-2 text-sm font-semibold text-primary-600 hover:text-primary-700 dark:text-primary-300"
         >
           Back to sign in
         </Link>
@@ -123,7 +123,7 @@ export default function ForgotPasswordPage() {
 
       <p className="text-center text-sm text-[var(--color-text-muted)]">
         Remembered your password?{" "}
-        <Link href="/login" className="font-semibold text-navy-600 hover:text-navy-700 dark:text-navy-300">
+        <Link href="/login" className="font-semibold text-primary-600 hover:text-primary-700 dark:text-primary-300">
           Sign in
         </Link>
       </p>

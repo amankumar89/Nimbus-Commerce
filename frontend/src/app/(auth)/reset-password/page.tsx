@@ -57,7 +57,7 @@ function ResetPasswordForm() {
         </p>
         <Link
           href="/forgot-password"
-          className="mt-2 text-sm font-semibold text-navy-600 hover:text-navy-700 dark:text-navy-300"
+          className="mt-2 text-sm font-semibold text-primary-600 hover:text-primary-700 dark:text-primary-300"
         >
           Request a new link
         </Link>
@@ -162,7 +162,7 @@ function ResetPasswordForm() {
 
       <p className="text-center text-sm text-[var(--color-text-muted)]">
         Remembered your password?{" "}
-        <Link href="/login" className="font-semibold text-navy-600 hover:text-navy-700 dark:text-navy-300">
+        <Link href="/login" className="font-semibold text-primary-600 hover:text-primary-700 dark:text-primary-300">
           Sign in
         </Link>
       </p>

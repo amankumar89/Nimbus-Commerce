@@ -43,14 +43,14 @@ export default function OrderConfirmationPage() {
       <div className="mt-8 flex flex-col gap-6 rounded-xl border border-(--color-border) bg-(--color-bg) p-6">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-(--color-border) pb-4">
           <div className="flex items-center gap-2">
-            <Package size={16} className="text-navy-600 dark:text-navy-300" />
+            <Package size={16} className="text-primary-600 dark:text-primary-300" />
             <div>
               <p className="text-xs text-(--color-text-muted)">Order Number</p>
               <p className="text-sm font-semibold text-(--color-text)">{order.id}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Calendar size={16} className="text-navy-600 dark:text-navy-300" />
+            <Calendar size={16} className="text-primary-600 dark:text-primary-300" />
             <div>
               <p className="text-xs text-(--color-text-muted)">Estimated Delivery</p>
               <p className="text-sm font-semibold text-(--color-text)">

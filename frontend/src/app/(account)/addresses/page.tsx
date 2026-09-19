@@ -50,7 +50,7 @@ export default function AddressesPage() {
               <div className="flex items-start justify-between">
                 <p className="text-sm font-semibold text-(--color-text)">{address.fullName}</p>
                 {address.isDefault && (
-                  <span className="rounded-full bg-navy-700 px-2 py-0.5 text-[10px] font-bold text-white">
+                  <span className="rounded-full bg-primary-700 px-2 py-0.5 text-[10px] font-bold text-white">
                     Default
                   </span>
                 )}
@@ -65,7 +65,7 @@ export default function AddressesPage() {
                 {!address.isDefault && (
                   <button
                     onClick={() => setDefault.mutate(address.id)}
-                    className="flex items-center gap-1 text-xs font-medium text-navy-600 hover:text-navy-700 dark:text-navy-300"
+                    className="flex items-center gap-1 text-xs font-medium text-primary-600 hover:text-primary-700 dark:text-primary-300"
                   >
                     <Star size={12} />
                     Set as Default

@@ -45,7 +45,7 @@ export default function CheckoutPage() {
               {!isAddingAddress && (
                 <button
                   onClick={() => setIsAddingAddress(true)}
-                  className="flex items-center gap-1 text-sm font-medium text-navy-600 hover:text-navy-700 dark:text-navy-300"
+                  className="flex items-center gap-1 text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-300"
                 >
                   <Plus size={14} />
                   Add New

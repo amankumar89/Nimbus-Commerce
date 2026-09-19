@@ -14,7 +14,7 @@ export default function StatCard({ label, value, change, icon: Icon }: StatCardP
     <div className="flex flex-col gap-3 rounded-xl border border-(--color-border) bg-(--color-bg) p-5">
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium text-(--color-text-muted)">{label}</span>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-50 text-navy-700 dark:bg-navy-800 dark:text-navy-300">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-50 text-primary-700 dark:bg-primary-800 dark:text-primary-300">
           <Icon size={16} />
         </div>
       </div>

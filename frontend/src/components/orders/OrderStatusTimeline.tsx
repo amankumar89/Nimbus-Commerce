@@ -22,13 +22,13 @@ export default function OrderStatusTimeline({ status }: { status: Order["status"
             <div className="flex w-full items-center">
               {index > 0 && (
                 <div
-                  className={`h-0.5 flex-1 ${index <= currentIndex ? "bg-navy-600" : "bg-(--color-border)"
+                  className={`h-0.5 flex-1 ${index <= currentIndex ? "bg-primary-600" : "bg-(--color-border)"
                     }`}
                 />
               )}
               <div
                 className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${isComplete
-                  ? "bg-navy-700 text-white"
+                  ? "bg-primary-700 text-white"
                   : "bg-(--color-surface) text-(--color-text-muted)"
                   }`}
               >
@@ -36,7 +36,7 @@ export default function OrderStatusTimeline({ status }: { status: Order["status"
               </div>
               {index < STEPS.length - 1 && (
                 <div
-                  className={`h-0.5 flex-1 ${index < currentIndex ? "bg-navy-600" : "bg-(--color-border)"
+                  className={`h-0.5 flex-1 ${index < currentIndex ? "bg-primary-600" : "bg-(--color-border)"
                     }`}
                 />
               )}

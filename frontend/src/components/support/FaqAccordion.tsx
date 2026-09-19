@@ -50,7 +50,7 @@ export default function FaqAccordion({ searchTerm }: { searchTerm: string }) {
     <div className="flex flex-col gap-8">
       {categories.map((category) => (
         <div key={category} id={category.toLowerCase()}>
-          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-navy-600 dark:text-navy-300">
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-300">
             {category}
           </h3>
           <div className="flex flex-col gap-2">

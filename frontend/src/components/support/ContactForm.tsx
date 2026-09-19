@@ -114,7 +114,7 @@ export default function ContactForm() {
               value={field.state.value}
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
-              className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3.5 py-2.5 text-sm text-(--color-text) outline-none focus:border-navy-500"
+              className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3.5 py-2.5 text-sm text-(--color-text) outline-none focus:border-primary-500"
             >
               <option value="">Select a subject</option>
               {SUBJECTS.map((s) => (
@@ -149,7 +149,7 @@ export default function ContactForm() {
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
               placeholder="How can we help?"
-              className="w-full resize-none rounded-lg border border-(--color-border) bg-(--color-bg) px-3.5 py-2.5 text-sm text-(--color-text) outline-none focus:border-navy-500"
+              className="w-full resize-none rounded-lg border border-(--color-border) bg-(--color-bg) px-3.5 py-2.5 text-sm text-(--color-text) outline-none focus:border-primary-500"
             />
           </FormField>
         )}

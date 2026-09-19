@@ -25,7 +25,7 @@ export default function UpiPaymentForm({ upiId, onUpiIdChange, amount }: UpiPaym
           type="button"
           onClick={() => setMode("id")}
           className={`rounded-full border px-4 py-1.5 text-xs font-medium transition-colors ${mode === "id"
-            ? "border-navy-700 bg-navy-700 text-white"
+            ? "border-primary-700 bg-primary-700 text-white"
             : "border-(--color-border) text-(--color-text-muted)"
             }`}
         >
@@ -35,7 +35,7 @@ export default function UpiPaymentForm({ upiId, onUpiIdChange, amount }: UpiPaym
           type="button"
           onClick={() => setMode("qr")}
           className={`rounded-full border px-4 py-1.5 text-xs font-medium transition-colors ${mode === "qr"
-            ? "border-navy-700 bg-navy-700 text-white"
+            ? "border-primary-700 bg-primary-700 text-white"
             : "border-(--color-border) text-(--color-text-muted)"
             }`}
         >

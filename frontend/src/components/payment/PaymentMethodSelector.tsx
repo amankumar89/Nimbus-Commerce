@@ -23,13 +23,13 @@ export default function PaymentMethodSelector({ selected, onSelect }: PaymentMet
           type="button"
           onClick={() => onSelect(id)}
           className={`flex flex-col items-center gap-2 rounded-xl border p-4 text-center transition-colors ${selected === id
-            ? "border-navy-600 bg-navy-50 dark:bg-navy-900/40"
-            : "border-(--color-border) bg-(--color-bg) hover:border-navy-400"
+            ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40"
+            : "border-(--color-border) bg-(--color-bg) hover:border-primary-400"
             }`}
         >
           <Icon
             size={20}
-            className={selected === id ? "text-navy-700 dark:text-navy-300" : "text-(--color-text-muted)"}
+            className={selected === id ? "text-primary-700 dark:text-primary-300" : "text-(--color-text-muted)"}
           />
           <span className="text-xs font-medium text-(--color-text)">{label}</span>
         </button>

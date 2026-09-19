@@ -42,7 +42,7 @@ export default function AdminProductsPage() {
             setPage(1);
           }}
           placeholder="Search products…"
-          className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) py-2 pl-9 pr-4 text-sm outline-none focus:border-navy-500"
+          className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) py-2 pl-9 pr-4 text-sm outline-none focus:border-primary-500"
         />
       </div>
 
@@ -91,7 +91,7 @@ export default function AdminProductsPage() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => setFormModal({ open: true, product })}
-                        className="flex h-8 w-8 items-center justify-center rounded-lg text-(--color-text-muted) transition-colors hover:bg-(--color-surface) hover:text-navy-600"
+                        className="flex h-8 w-8 items-center justify-center rounded-lg text-(--color-text-muted) transition-colors hover:bg-(--color-surface) hover:text-primary-600"
                       >
                         <Pencil size={14} />
                       </button>

@@ -7,8 +7,8 @@ import Skeleton from "@/components/ui/Skeleton";
 
 const STATUS_STYLES: Record<string, string> = {
   DELIVERED: "bg-success/10 text-success",
-  SHIPPED: "bg-navy-100 text-navy-700 dark:bg-navy-800 dark:text-navy-300",
-  OUT_FOR_DELIVERY: "bg-navy-100 text-navy-700 dark:bg-navy-800 dark:text-navy-300",
+  SHIPPED: "bg-primary-100 text-primary-700 dark:bg-primary-800 dark:text-primary-300",
+  OUT_FOR_DELIVERY: "bg-primary-100 text-primary-700 dark:bg-primary-800 dark:text-primary-300",
   PACKED: "bg-warning/10 text-warning",
   CONFIRMED: "bg-warning/10 text-warning",
   PENDING: "bg-(--color-surface) text-(--color-text-muted)",
@@ -40,7 +40,7 @@ export default function OrderHistoryPage() {
             <Link
               key={order.id}
               href={`/track-order/${order.id}`}
-              className="flex flex-col gap-3 rounded-xl border border-(--color-border) bg-(--color-bg) p-4 transition-colors hover:border-navy-500 sm:flex-row sm:items-center sm:justify-between"
+              className="flex flex-col gap-3 rounded-xl border border-(--color-border) bg-(--color-bg) p-4 transition-colors hover:border-primary-500 sm:flex-row sm:items-center sm:justify-between"
             >
               <div>
                 <p className="text-sm font-semibold text-(--color-text)">Order #{order.id}</p>

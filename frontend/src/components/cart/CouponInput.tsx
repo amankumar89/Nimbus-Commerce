@@ -35,7 +35,7 @@ export default function CouponInput({ appliedCode }: { appliedCode?: string }) {
         placeholder="Enter coupon code"
         value={code}
         onChange={(e) => setCode(e.target.value.toUpperCase())}
-        className="flex-1 rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm outline-none focus:border-navy-500"
+        className="flex-1 rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm outline-none focus:border-primary-500"
       />
       <Button
         variant="secondary"

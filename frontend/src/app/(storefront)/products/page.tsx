@@ -76,19 +76,19 @@ function ProductListPageContent() {
         <div className="flex items-center gap-2">
           <button
             onClick={openFilterModal}
-            className="flex items-center gap-2 rounded-lg border border-(--color-border) bg-(--color-bg) px-3.5 py-2 text-sm font-medium text-(--color-text) transition-colors hover:border-navy-500"
+            className="flex items-center gap-2 rounded-lg border border-(--color-border) bg-(--color-bg) px-3.5 py-2 text-sm font-medium text-(--color-text) transition-colors hover:border-primary-500"
           >
             <SlidersHorizontal size={15} />
             Filter
             {activeFilterCount > 0 && (
-              <span className="flex h-4.5 w-4.5 items-center justify-center rounded-full bg-navy-700 text-[10px] font-bold text-white">
+              <span className="flex h-4.5 w-4.5 items-center justify-center rounded-full bg-primary-700 text-[10px] font-bold text-white">
                 {activeFilterCount}
               </span>
             )}
           </button>
           <button
             onClick={() => setIsSortOpen(true)}
-            className="flex items-center gap-2 rounded-lg border border-(--color-border) bg-(--color-bg) px-3.5 py-2 text-sm font-medium text-(--color-text) transition-colors hover:border-navy-500"
+            className="flex items-center gap-2 rounded-lg border border-(--color-border) bg-(--color-bg) px-3.5 py-2 text-sm font-medium text-(--color-text) transition-colors hover:border-primary-500"
           >
             <ArrowUpDown size={15} />
             Sort

@@ -37,14 +37,14 @@ export default function SortDropdown({ sortBy, direction, onChange }: SortDropdo
     <div className="relative" ref={ref}>
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-2 rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm font-medium text-[var(--color-text)] transition-colors hover:border-navy-500"
+        className="flex items-center gap-2 rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm font-medium text-[var(--color-text)] transition-colors hover:border-primary-500"
       >
         Sort: {activeOption.label}
         <ChevronDown size={14} className={`transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-11 z-20 w-56 overflow-hidden rounded-xl border border-(--color-border) bg-(--color-bg) py-1.5 shadow-xl shadow-navy-900/10">
+        <div className="absolute right-0 top-11 z-20 w-56 overflow-hidden rounded-xl border border-(--color-border) bg-(--color-bg) py-1.5 shadow-xl shadow-primary-900/10">
           {SORT_OPTIONS.map((option) => {
             const isActive = option.sortBy === sortBy && option.direction === direction;
             return (
@@ -57,7 +57,7 @@ export default function SortDropdown({ sortBy, direction, onChange }: SortDropdo
                 className="flex w-full items-center justify-between px-4 py-2 text-left text-sm text-(--color-text) transition-colors hover:bg-(--color-surface)"
               >
                 {option.label}
-                {isActive && <Check size={14} className="text-navy-600 dark:text-navy-300" />}
+                {isActive && <Check size={14} className="text-primary-600 dark:text-primary-300" />}
               </button>
             );
           })}

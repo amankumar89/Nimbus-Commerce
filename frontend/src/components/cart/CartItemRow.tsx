@@ -26,7 +26,7 @@ export default function CartItemRow({ item }: { item: CartItem }) {
         <div className="flex items-start justify-between gap-2">
           <Link
             href={`/products/${item.productId}`}
-            className="line-clamp-2 text-sm font-medium text-(--color-text) hover:text-navy-600 dark:hover:text-navy-300"
+            className="line-clamp-2 text-sm font-medium text-(--color-text) hover:text-primary-600 dark:hover:text-primary-300"
           >
             {item.name}
           </Link>
@@ -45,7 +45,7 @@ export default function CartItemRow({ item }: { item: CartItem }) {
                 updateItem.mutate({ itemId: item.id, quantity: Math.max(1, item.quantity - 1) })
               }
               disabled={updateItem.isPending || item.quantity <= 1}
-              className="flex h-8 w-8 items-center justify-center text-(--color-text-muted) transition-colors hover:text-navy-600 disabled:opacity-40"
+              className="flex h-8 w-8 items-center justify-center text-(--color-text-muted) transition-colors hover:text-primary-600 disabled:opacity-40"
             >
               <Minus size={13} />
             </button>
@@ -60,7 +60,7 @@ export default function CartItemRow({ item }: { item: CartItem }) {
                 })
               }
               disabled={updateItem.isPending || item.quantity >= item.stock}
-              className="flex h-8 w-8 items-center justify-center text-(--color-text-muted) transition-colors hover:text-navy-600 disabled:opacity-40"
+              className="flex h-8 w-8 items-center justify-center text-(--color-text-muted) transition-colors hover:text-primary-600 disabled:opacity-40"
             >
               <Plus size={13} />
             </button>

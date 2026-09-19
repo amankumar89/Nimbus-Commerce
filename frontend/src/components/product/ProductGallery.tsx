@@ -33,7 +33,7 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
             <button
               key={img + i}
               onClick={() => setActiveIndex(i)}
-              className={`relative aspect-square w-16 shrink-0 overflow-hidden rounded-lg border-2 transition-colors sm:w-full ${activeIndex === i ? "border-navy-600" : "border-(--color-border)"
+              className={`relative aspect-square w-16 shrink-0 overflow-hidden rounded-lg border-2 transition-colors sm:w-full ${activeIndex === i ? "border-primary-600" : "border-(--color-border)"
                 }`}
             >
               <Image src={img} alt={`${name} ${i + 1}`} fill className="object-cover" sizes="80px" />

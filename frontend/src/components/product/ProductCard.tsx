@@ -18,7 +18,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/products/${product.id}`}
-      className="group relative flex flex-col overflow-hidden rounded-xl border border-(--color-border) bg-(--color-bg) transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-navy-900/5"
+      className="group relative flex flex-col overflow-hidden rounded-xl border border-(--color-border) bg-(--color-bg) transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary-900/5"
     >
       <div className="relative aspect-square w-full overflow-hidden bg-(--color-surface)">
         {product.images?.[0] ? (
@@ -53,7 +53,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {product.stock === 0 && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-            <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-navy-900">
+            <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-primary-900">
               Out of Stock
             </span>
           </div>

@@ -23,7 +23,7 @@ export default function ProductRow({ title, viewAllHref, queryParams }: ProductR
         <h2 className="text-xl font-bold text-(--color-text)">{title}</h2>
         <Link
           href={viewAllHref}
-          className="flex items-center gap-1 text-sm font-medium text-navy-600 hover:text-navy-700 dark:text-navy-300"
+          className="flex items-center gap-1 text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-300"
         >
           View All
           <ArrowRight size={14} />

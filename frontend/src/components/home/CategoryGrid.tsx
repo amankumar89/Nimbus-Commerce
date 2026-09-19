@@ -19,9 +19,9 @@ export default function CategoryGrid() {
           <Link
             key={slug}
             href={`/products?category=${encodeURIComponent(slug)}`}
-            className="flex flex-col items-center gap-2 rounded-xl border border-(--color-border) bg-(--color-bg) p-4 text-center transition-all hover:-translate-y-0.5 hover:border-navy-500 hover:shadow-md hover:shadow-navy-900/5"
+            className="flex flex-col items-center gap-2 rounded-xl border border-(--color-border) bg-(--color-bg) p-4 text-center transition-all hover:-translate-y-0.5 hover:border-primary-500 hover:shadow-md hover:shadow-primary-900/5"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-navy-50 text-navy-700 dark:bg-navy-800 dark:text-navy-300">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-50 text-primary-700 dark:bg-primary-800 dark:text-primary-300">
               <Icon size={18} />
             </div>
             <span className="text-xs font-medium text-(--color-text)">{name}</span>
