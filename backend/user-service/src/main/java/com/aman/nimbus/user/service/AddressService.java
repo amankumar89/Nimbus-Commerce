@@ -83,7 +83,7 @@ public class AddressService {
         return addressRepository
                 .findByUserProfileId(userId)
                 .stream()
-                .map(address1 -> modelMapper.map(address, AddressDto.class))
+            .map(tempAddress -> modelMapper.map(tempAddress, AddressDto.class))
                 .toList();
     }
 }
