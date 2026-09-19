@@ -1,15 +1,17 @@
 package com.aman.nimbus.user.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.UUID;
 
-@Entity
-@Table(name = "addresses")
 @Getter
 @Setter
+@Builder
+@Entity
+@Table(name = "addresses")
 public class Address {
 
     @Id
@@ -28,5 +30,7 @@ public class Address {
     private String state;
     private String postalCode;
     private String country;
+
+    @Builder.Default
     private boolean isDefault = false;
 }

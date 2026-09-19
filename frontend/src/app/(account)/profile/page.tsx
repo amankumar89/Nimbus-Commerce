@@ -26,6 +26,7 @@ export default function ProfilePage() {
     defaultValues: { currentPassword: "", newPassword: "", confirmNewPassword: "" },
     onSubmit: async ({ value, formApi }) => {
       const result = changePasswordSchema.safeParse(value);
+      console.log(result.success);
       if (!result.success) return;
       await changePassword.mutateAsync({
         currentPassword: result.data.currentPassword,
@@ -160,7 +161,7 @@ export default function ProfilePage() {
               name="newPassword"
               validators={{
                 onChange: ({ value }) =>
-                  value.length >= 6 ? undefined : "Must be at least 6 characters",
+                  value.length >= 4 ? undefined : "Must be at least 4 characters",
               }}
             >
               {(field) => (

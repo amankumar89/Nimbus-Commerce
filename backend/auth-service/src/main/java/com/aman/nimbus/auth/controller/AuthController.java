@@ -12,6 +12,8 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Slf4j
 @RestController
 @RequestMapping("/auth")
@@ -72,6 +74,15 @@ public class AuthController {
         authService.logout(rawRefreshToken);
         clearRefreshCookie(response);
         return SuccessResponse.ok("Logged out successfully");
+    }
+
+    @PatchMapping("/change-password")
+    public ResponseEntity<SuccessResponse<Void>> changePassword(
+            @RequestHeader("X-User-Id") UUID userId,
+            @Valid @RequestBody ChangePasswordRequest request) {
+        log.info("PATCH /auth/change-password : AuthController");
+        authService.changePassword(userId, request);
+        return SuccessResponse.ok("Password changed successfully");
     }
 
     private void setRefreshCookie(
