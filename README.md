@@ -65,55 +65,55 @@ flowchart LR
   U -.-> KF
 ```
 
-| Layer | Role |
-| --- | --- |
+| Layer      | Role                                                                                  |
+| ---------- | ------------------------------------------------------------------------------------- |
 | Storefront | App Router, Tailwind CSS 4, TanStack Query / Form, Zod, Axios, Redux Toolkit for auth |
-| Gateway | Spring Cloud Gateway — path-based routing, JWT awareness |
-| Discovery | Netflix Eureka |
-| Domain | Spring Boot 4, Java 21, Maven wrapper per module (no aggregator POM) |
-| Data | PostgreSQL **per owning service** (`*-dev.yaml` is gitignored) |
-| Events | Kafka only where a real workflow exists — local broker via Docker Compose |
+| Gateway    | Spring Cloud Gateway — path-based routing, JWT awareness                              |
+| Discovery  | Netflix Eureka                                                                        |
+| Domain     | Spring Boot 4, Java 21, Maven wrapper per module (no aggregator POM)                  |
+| Data       | PostgreSQL **per owning service** (`*-dev.yaml` is gitignored)                        |
+| Events     | Kafka only where a real workflow exists — local broker via Docker Compose             |
 
 ---
 
 ## Backend services
 
-| Module | Port (committed) | Owns |
-| --- | --- | --- |
-| `backend/eureka-server` | `8761` | Service registry |
-| `backend/api-gateway` | `8080` | Frontend entry; load-balanced routes |
-| `backend/auth-service` | local profile | Credentials, JWT access tokens, refresh-token cookies |
-| `backend/user-service` | local profile | Profiles, addresses, admin customers |
-| `backend/catalog-service` | local profile | Products and categories |
-| `backend/cart-service` | local profile | Carts and wishlists |
-| `backend/order-service` | local profile | Orders, admin orders / dashboard |
-| `backend/payment-service` | local profile | Payments |
-| `backend/support-service` | local profile | Support |
+| Module                    | Port (committed) | Owns                                                  |
+| ------------------------- | ---------------- | ----------------------------------------------------- |
+| `backend/eureka-server`   | `8761`           | Service registry                                      |
+| `backend/api-gateway`     | `8080`           | Frontend entry; load-balanced routes                  |
+| `backend/auth-service`    | local profile    | Credentials, JWT access tokens, refresh-token cookies |
+| `backend/user-service`    | local profile    | Profiles, addresses, admin customers                  |
+| `backend/catalog-service` | local profile    | Products and categories                               |
+| `backend/cart-service`    | local profile    | Carts and wishlists                                   |
+| `backend/order-service`   | local profile    | Orders, admin orders / dashboard                      |
+| `backend/payment-service` | local profile    | Payments                                              |
+| `backend/support-service` | local profile    | Support                                               |
 
 Domain ports live in gitignored `*-dev.yaml` profiles. Do not commit datasource URLs, JWT secrets, or passwords.
 
 ### Gateway prefixes
 
-| Prefix | Target |
-| --- | --- |
-| `/auth/**` | auth-service |
-| `/users/**`, `/addresses/**`, `/admin/customers/**` | user-service |
+| Prefix                                                                         | Target          |
+| ------------------------------------------------------------------------------ | --------------- |
+| `/auth/**`                                                                     | auth-service    |
+| `/users/**`, `/addresses/**`, `/admin/customers/**`                            | user-service    |
 | `/products/**`, `/categories/**`, `/admin/products/**`, `/admin/categories/**` | catalog-service |
-| `/cart/**`, `/wishlist/**` | cart-service |
-| `/orders/**`, `/admin/orders/**`, `/admin/dashboard/**` | order-service |
-| `/payments/**` | payment-service |
-| `/support/**` | support-service |
+| `/cart/**`, `/wishlist/**`                                                     | cart-service    |
+| `/orders/**`, `/admin/orders/**`, `/admin/dashboard/**`                        | order-service   |
+| `/payments/**`                                                                 | payment-service |
+| `/support/**`                                                                  | support-service |
 
 ---
 
 ## Frontend surfaces
 
-| Area | Routes |
-| --- | --- |
+| Area       | Routes                                                                                            |
+| ---------- | ------------------------------------------------------------------------------------------------- |
 | Storefront | Home, products, product detail, cart, checkout, payment, order confirmation, track order, support |
-| Auth | Login, register, forgot password, reset password |
-| Account | Profile, addresses, orders, wishlist, payment methods |
-| Admin | Dashboard, products, customers, orders |
+| Auth       | Login, register, forgot password, reset password                                                  |
+| Account    | Profile, addresses, orders, wishlist, payment methods                                             |
+| Admin      | Dashboard, products, customers, orders                                                            |
 
 Stack: **Next.js 15** (App Router + Turbopack), **React 19**, **Tailwind CSS 4**, **TanStack Query**, **TanStack Form**, **Zod**, **Axios**, **Redux Toolkit**.
 
@@ -131,8 +131,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8080
 
 - **Node.js 22** and npm
 - **JDK 21** (Temurin recommended)
-- **PostgreSQL** for any service with persistence
-- **Docker** if you need Kafka locally
+- **Docker** for the local PostgreSQL and Kafka stack
 
 ### Storefront
 
@@ -173,9 +172,11 @@ Typical local order:
 
 ## Run the stack
 
-### Kafka (optional)
+### Local infrastructure
 
-Broker on **9092**, Kafka UI on **8090**. Do not assume it is running in CI.
+The compose stack provides one PostgreSQL service with a separate database per domain service, Kafka, and Kafka UI.
+PostgreSQL is exposed on port **5432**, Kafka on **9092**, and Kafka UI on **8090**.
+Do not assume these services are running in CI.
 
 ```bash
 cd backend
@@ -188,11 +189,11 @@ Events are **opt-in**. Producer, consumer, payload, and failure handling should 
 
 ### Configuration
 
-| Do | Don’t |
-| --- | --- |
+| Do                                               | Don’t                                                  |
+| ------------------------------------------------ | ------------------------------------------------------ |
 | Use environment variables and local `*-dev.yaml` | Commit credentials, JWT secrets, or connection strings |
-| Point the frontend at `localhost:8080` | Point Axios at internal service ports |
-| Keep one database per owning service | Share tables across services |
+| Point the frontend at `localhost:8080`           | Point Axios at internal service ports                  |
+| Keep one database per owning service             | Share tables across services                           |
 
 ---
 
@@ -211,7 +212,7 @@ Nimbus-Commerce-App/
 │   ├── order-service/
 │   ├── payment-service/
 │   ├── support-service/
-│   └── docker-compose.yaml   # Kafka + Kafka UI
+│   └── docker-compose.yaml   # PostgreSQL databases + Kafka + Kafka UI
 └── .github/                  # CI, Copilot instructions, PR templates
 ```
 
@@ -219,11 +220,11 @@ Nimbus-Commerce-App/
 
 ## CI
 
-| Workflow | What it does |
-| --- | --- |
-| [Frontend](.github/workflows/frontend.yml) | `npm ci` → lint → production build (Node 22) |
-| [Backend](.github/workflows/backend.yml) | Matrix compile of every Maven module, `-DskipTests` (Java 21) |
-| CodeQL | Static analysis on the default branches |
+| Workflow                                   | What it does                                                  |
+| ------------------------------------------ | ------------------------------------------------------------- |
+| [Frontend](.github/workflows/frontend.yml) | `npm ci` → lint → production build (Node 22)                  |
+| [Backend](.github/workflows/backend.yml)   | Matrix compile of every Maven module, `-DskipTests` (Java 21) |
+| CodeQL                                     | Static analysis on the default branches                       |
 
 ---
 
