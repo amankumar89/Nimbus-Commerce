@@ -980,10 +980,10 @@ const data = {
     }
   ]
 }
-export const products: Product[] = data.products;
-export const dashboardStats: DashboardStats = data.dashboardStats;
-export const orders: Order = data.orders;
-export const orderItems: OrderItem[] = data.orderItems;
+export const products: Product[] = data.products as Product[];
+export const dashboardStats: DashboardStats = data.dashboardStats as DashboardStats;
+export const orders: Order[] = data.orders as Order[];
+export const orderItems: OrderItem[] = data.orderItems as OrderItem[];
 
 export const faqs: Faq[] = [
   {

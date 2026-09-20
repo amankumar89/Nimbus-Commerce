@@ -4,7 +4,7 @@ import { useState } from "react";
 
 interface ProductTabsProps {
   description: string;
-  specifications: Record<string, string>;
+  specifications: Record<string, string | undefined>;
 }
 
 export default function ProductTabs({ description, specifications }: ProductTabsProps) {
@@ -39,7 +39,7 @@ export default function ProductTabs({ description, specifications }: ProductTabs
               {Object.entries(specifications ?? {}).map(([key, value]) => (
                 <tr key={key} className="border-b border-(--color-border) last:border-0">
                   <td className="py-2.5 pr-4 font-medium text-(--color-text)">{key}</td>
-                  <td className="py-2.5 text-(--color-text-muted)">{value}</td>
+                  <td className="py-2.5 text-(--color-text-muted)">{value ?? "N/A"}</td>
                 </tr>
               ))}
             </tbody>

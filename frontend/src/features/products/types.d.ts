@@ -10,7 +10,7 @@ interface Product {
   stock: number;
   category: string;
   description: string;
-  specifications: Record<string, string>;
+  specifications: Record<string, string | undefined>;
 }
 
 interface PaginatedResponse<T> {

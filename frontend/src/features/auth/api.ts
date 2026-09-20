@@ -10,7 +10,7 @@ export async function loginRequest(payload: {
   password: string;
 }): Promise<ApiResponse<LoginResponse>> {
   const res = await axiosInstance.post<ApiResponse<LoginResponse>>("/auth/login", payload);
-  return res.data;
+  return res?.data;
 }
 
 export async function registerRequest(payload: {

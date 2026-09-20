@@ -11,6 +11,9 @@ function shouldSkipTokenRefresh(url: string | undefined): boolean {
   const authEndpoints = [
     "auth/login",
     "auth/register",
+    "auth/logout",
+    "auth/forgot-password",
+    "auth/reset-password",
   ];
 
   return authEndpoints.some((endpoint) => url.includes(endpoint));
@@ -63,13 +66,14 @@ function processQueue(error: unknown, token: string | null) {
 }
 
 async function refreshAccessToken(): Promise<string> {
-  const response = await refreshClient.post("/auth/refresh");
-  const accessToken: string = response.data.accessToken;
-  const user: AuthUser = response.data.user;
+  const response = await refreshClient.post<ApiResponse<LoginResponse>>("/auth/refresh");
+  const { accessToken, user } = response.data.data;
+
   store.dispatch(setCredentials({
     accessToken,
-    user
+    user,
   }));
+
   return accessToken;
 }
 
