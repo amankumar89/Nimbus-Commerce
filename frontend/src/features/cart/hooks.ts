@@ -14,6 +14,7 @@ import { AxiosError } from "axios";
 
 export const cartKeys = {
   all: ["cart"] as const,
+  forUser: (userId: string) => ["cart", userId] as const,
 };
 
 export function useCart() {
@@ -21,7 +22,7 @@ export function useCart() {
   const isAuthChecked = useAppSelector((state) => state.auth.isAuthChecked);
 
   return useQuery({
-    queryKey: cartKeys.all,
+    queryKey: cartKeys.forUser(user?.id ?? "anonymous"),
     queryFn: getCart,
     // Only fetch once auth is resolved AND user is actually logged in
     enabled: isAuthChecked && !!user,
@@ -48,11 +49,12 @@ function useRequireAuth() {
 export function useAddToCart() {
   const queryClient = useQueryClient();
   const requireAuth = useRequireAuth();
+  const user = useAppSelector((state) => state.auth.user);
 
   const mutation = useMutation({
     mutationFn: addToCart,
     onSuccess: (updatedCart) => {
-      queryClient.setQueryData(cartKeys.all, updatedCart);
+      if (user) queryClient.setQueryData(cartKeys.forUser(user.id), updatedCart);
       toast.success("Added to cart");
     },
     onError: (error: AxiosError<ApiResponse>) => {
@@ -75,11 +77,12 @@ export function useAddToCart() {
 
 export function useUpdateCartItem() {
   const queryClient = useQueryClient();
+  const user = useAppSelector((state) => state.auth.user);
 
   return useMutation({
     mutationFn: updateCartItem,
     onSuccess: (updatedCart) => {
-      queryClient.setQueryData(cartKeys.all, updatedCart);
+      if (user) queryClient.setQueryData(cartKeys.forUser(user.id), updatedCart);
     },
     onError: (error: AxiosError<ApiResponse>) => {
       toast.error(error?.response?.data?.message ?? "Could not update quantity");
@@ -89,11 +92,12 @@ export function useUpdateCartItem() {
 
 export function useRemoveCartItem() {
   const queryClient = useQueryClient();
+  const user = useAppSelector((state) => state.auth.user);
 
   return useMutation({
     mutationFn: removeCartItem,
     onSuccess: (updatedCart) => {
-      queryClient.setQueryData(cartKeys.all, updatedCart);
+      if (user) queryClient.setQueryData(cartKeys.forUser(user.id), updatedCart);
       toast.success("Item removed");
     },
     onError: (error: AxiosError<ApiResponse>) => {
@@ -104,11 +108,12 @@ export function useRemoveCartItem() {
 
 export function useApplyCoupon() {
   const queryClient = useQueryClient();
+  const user = useAppSelector((state) => state.auth.user);
 
   return useMutation({
     mutationFn: applyCoupon,
     onSuccess: (updatedCart) => {
-      queryClient.setQueryData(cartKeys.all, updatedCart);
+      if (user) queryClient.setQueryData(cartKeys.forUser(user.id), updatedCart);
       toast.success("Coupon applied");
     },
     onError: (error: AxiosError<ApiResponse>) => {
@@ -119,11 +124,12 @@ export function useApplyCoupon() {
 
 export function useRemoveCoupon() {
   const queryClient = useQueryClient();
+  const user = useAppSelector((state) => state.auth.user);
 
   return useMutation({
     mutationFn: removeCoupon,
     onSuccess: (updatedCart) => {
-      queryClient.setQueryData(cartKeys.all, updatedCart);
+      if (user) queryClient.setQueryData(cartKeys.forUser(user.id), updatedCart);
       toast.success("Coupon removed");
     },
   });

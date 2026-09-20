@@ -5,7 +5,7 @@ import { getWishlist, addToWishlist, removeFromWishlist } from "./api";
 import { useAppSelector } from "@/store/hooks";
 
 export const wishlistKeys = {
-  all: ["wishlist"] as const,
+  forUser: (userId: string) => ["wishlist", userId] as const,
 };
 
 export function useWishlist() {
@@ -13,7 +13,7 @@ export function useWishlist() {
   const isAuthChecked = useAppSelector((state) => state.auth.isAuthChecked);
 
   return useQuery({
-    queryKey: wishlistKeys.all,
+    queryKey: wishlistKeys.forUser(user?.id ?? "anonymous"),
     queryFn: getWishlist,
     enabled: isAuthChecked && !!user,
     staleTime: 30 * 1000,
@@ -38,12 +38,13 @@ function useRequireAuth() {
 export function useToggleWishlist() {
   const queryClient = useQueryClient();
   const requireAuth = useRequireAuth();
+  const user = useAppSelector((state) => state.auth.user);
   const { data: wishlist } = useWishlist();
 
   const addMutation = useMutation({
     mutationFn: addToWishlist,
     onSuccess: (data) => {
-      queryClient.setQueryData(wishlistKeys.all, data);
+      if (user) queryClient.setQueryData(wishlistKeys.forUser(user.id), data);
       toast.success("Added to wishlist");
     },
   });
@@ -51,7 +52,7 @@ export function useToggleWishlist() {
   const removeMutation = useMutation({
     mutationFn: removeFromWishlist,
     onSuccess: (data) => {
-      queryClient.setQueryData(wishlistKeys.all, data);
+      if (user) queryClient.setQueryData(wishlistKeys.forUser(user.id), data);
       toast.success("Removed from wishlist");
     },
   });

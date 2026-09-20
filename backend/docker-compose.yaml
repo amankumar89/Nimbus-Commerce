@@ -107,6 +107,23 @@ services:
       - nimbus-network
 
   # ============================================================
+  # CART SERVICE
+  # ============================================================
+
+  cart-service:
+    build:
+      context: ./cart-service
+      dockerfile: Dockerfile
+    container_name: nimbus-cart-service
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    networks:
+      - nimbus-network
+
+  # ============================================================
   # API GATEWAY
   # ============================================================
 
@@ -121,6 +138,8 @@ services:
       auth-service:
         condition: service_started
       user-service:
+        condition: service_started
+      cart-service:
         condition: service_started
     ports:
       - "8080:8080"

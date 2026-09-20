@@ -11,6 +11,7 @@ function shouldSkipTokenRefresh(url: string | undefined): boolean {
   const authEndpoints = [
     "auth/login",
     "auth/register",
+    "auth/refresh",
     "auth/logout",
     "auth/forgot-password",
     "auth/reset-password",
@@ -83,8 +84,9 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config as RetryableRequestConfig;
     const isUnauthorized = error.response?.status === 401;
     const isRefreshCall = originalRequest?.url?.includes("/auth/refresh");
-    if (!isUnauthorized || isRefreshCall || originalRequest._retry) {
-      if (!shouldSkipTokenRefresh(originalRequest.url) && isUnauthorized && (isRefreshCall || originalRequest?._retry)) {
+    const isAuthEndpoint = shouldSkipTokenRefresh(originalRequest?.url);
+    if (!isUnauthorized || isRefreshCall || originalRequest?._retry || isAuthEndpoint) {
+      if (!isAuthEndpoint && isUnauthorized && (isRefreshCall || originalRequest?._retry)) {
         store.dispatch(logout());
         // if (typeof window !== "undefined") {
         //   window.location.href = "/login";
@@ -110,8 +112,6 @@ axiosInstance.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      if (shouldSkipTokenRefresh(originalRequest.url)) return;
-
       const newToken = await refreshAccessToken();
       processQueue(null, newToken);
       originalRequest.headers.Authorization = `Bearer ${newToken}`;
