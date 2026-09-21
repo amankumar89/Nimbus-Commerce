@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'picsum.photos',
+        hostname: '*',
         pathname: '/**',
       },
       { protocol: "https", hostname: "api.qrserver.com" },
