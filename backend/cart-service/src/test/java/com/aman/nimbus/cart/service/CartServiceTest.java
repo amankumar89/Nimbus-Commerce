@@ -30,6 +30,20 @@ class CartServiceTest {
     private CartItemRepository cartItemRepository;
 
     @Test
+    void shouldReturnEmptyCartWhenUserHasNoCart() {
+        UUID userId = UUID.randomUUID();
+        when(cartRepository.findByUserId(userId)).thenReturn(Optional.empty());
+
+        CartResponse cart = new CartService(cartRepository, cartItemRepository).getCart(userId);
+
+        assertThat(cart.getItems()).isEmpty();
+        assertThat(cart.getSubtotal()).isZero();
+        assertThat(cart.getDiscount()).isZero();
+        assertThat(cart.getShipping()).isZero();
+        assertThat(cart.getTotal()).isZero();
+    }
+
+    @Test
     void shouldAddItemAndCalculateTotals() {
         UUID userId = UUID.randomUUID();
         Cart persistedCart = Cart.builder().id(UUID.randomUUID()).userId(userId).build();
@@ -42,7 +56,6 @@ class CartServiceTest {
             item.setId(UUID.randomUUID());
             return item;
         });
-
         CartService cartService = new CartService(cartRepository, cartItemRepository);
 
         CartResponse cart = cartService.addItem(userId, new AddCartItemRequest("prod_123", 2));
@@ -53,6 +66,32 @@ class CartServiceTest {
         assertThat(cart.getSubtotal()).isEqualByComparingTo(BigDecimal.valueOf(159.98));
         assertThat(cart.getShipping()).isEqualByComparingTo(BigDecimal.valueOf(40));
         assertThat(cart.getTotal()).isEqualByComparingTo(BigDecimal.valueOf(199.98));
+    }
+
+    @Test
+    void shouldIncreaseQuantityWhenAddingAnExistingItem() {
+        UUID userId = UUID.randomUUID();
+        Cart cart = Cart.builder().id(UUID.randomUUID()).userId(userId).build();
+        CartItem item = CartItem.builder()
+                .id(UUID.randomUUID())
+                .cart(cart)
+                .productId("prod_123")
+                .name("Product prod_123")
+                .price(BigDecimal.valueOf(99.99))
+                .discountPrice(BigDecimal.valueOf(79.99))
+                .quantity(2)
+                .stock(50)
+                .build();
+        cart.getItems().add(item);
+        when(cartRepository.findByUserId(userId)).thenReturn(Optional.of(cart));
+        when(cartItemRepository.findByCartUserIdAndProductId(userId, "prod_123"))
+                .thenReturn(Optional.of(item));
+        CartService cartService = new CartService(cartRepository, cartItemRepository);
+
+        CartResponse updated = cartService.addItem(userId, new AddCartItemRequest("prod_123", 3));
+
+        assertThat(updated.getItems()).hasSize(1);
+        assertThat(updated.getItems().getFirst().getQuantity()).isEqualTo(5);
     }
 
     @Test
@@ -80,4 +119,5 @@ class CartServiceTest {
         assertThat(updated.getItems()).hasSize(1);
         assertThat(updated.getItems().getFirst().getQuantity()).isEqualTo(4);
     }
+
 }

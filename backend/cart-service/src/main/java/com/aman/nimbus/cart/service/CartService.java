@@ -123,6 +123,16 @@ public class CartService {
 
     private CartResponse buildCartResponse(Cart cart) {
         List<CartItem> items = cart.getItems();
+        if (items.isEmpty()) {
+            return CartResponse.builder()
+                    .items(List.of())
+                    .subtotal(BigDecimal.ZERO)
+                    .discount(BigDecimal.ZERO)
+                    .shipping(BigDecimal.ZERO)
+                    .total(BigDecimal.ZERO)
+                    .build();
+        }
+
         BigDecimal subtotal = items.stream()
                 .map(item -> (item.getDiscountPrice() != null ? item.getDiscountPrice() : item.getPrice())
                         .multiply(BigDecimal.valueOf(item.getQuantity())))

@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useRouter, usePathname } from "next/navigation";
 import { getWishlist, addToWishlist, removeFromWishlist } from "./api";
+import { addToCart } from "@/features/cart/api";
+import { cartKeys } from "@/features/cart/hooks";
 import { useAppSelector } from "@/store/hooks";
 
 export const wishlistKeys = {
@@ -70,4 +72,35 @@ export function useToggleWishlist() {
   };
 
   return { toggle, isInWishlist, isPending: addMutation.isPending || removeMutation.isPending };
+}
+
+export function useMoveWishlistToCart() {
+  const queryClient = useQueryClient();
+  const requireAuth = useRequireAuth();
+  const user = useAppSelector((state) => state.auth.user);
+
+  const mutation = useMutation({
+    mutationFn: async ({ productId, quantity }: { productId: string; quantity: number }) => {
+      const cart = await addToCart({ productId, quantity });
+      const wishlist = await removeFromWishlist(productId);
+      return { cart, wishlist };
+    },
+    onSuccess: ({ cart, wishlist }) => {
+      if (!user) return;
+      queryClient.setQueryData(cartKeys.forUser(user.id), cart);
+      queryClient.setQueryData(wishlistKeys.forUser(user.id), wishlist);
+      toast.success("Moved to cart");
+    },
+    onError: () => {
+      toast.error("Could not move item to cart");
+    },
+  });
+
+  return {
+    ...mutation,
+    mutate: (payload: { productId: string; quantity: number }) => {
+      if (!requireAuth()) return;
+      mutation.mutate(payload);
+    },
+  };
 }
