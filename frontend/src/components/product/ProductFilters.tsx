@@ -1,6 +1,8 @@
 "use client";
 
-const CATEGORIES = ["Electronics", "Fashion", "Home & Kitchen", "Beauty", "Sports", "Books"];
+import { useCategories } from "@/features/categories/hooks";
+
+const FALLBACK_CATEGORIES = ["Electronics", "Fashion", "Home & Kitchen", "Beauty", "Sports", "Books"];
 
 interface ProductFiltersProps {
   category?: string;
@@ -19,6 +21,9 @@ export default function ProductFilters({
   onMinPriceChange,
   onMaxPriceChange,
 }: ProductFiltersProps) {
+  const { data: categories } = useCategories();
+  const categoryNames = categories?.length ? categories.map((item) => item.name) : FALLBACK_CATEGORIES;
+
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -33,7 +38,7 @@ export default function ProductFilters({
           >
             All
           </button>
-          {CATEGORIES.map((cat) => (
+          {categoryNames.map((cat) => (
             <button
               key={cat}
               onClick={() => onCategoryChange(cat)}

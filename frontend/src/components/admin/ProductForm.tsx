@@ -6,6 +6,7 @@ import { useCreateProduct, useUpdateProduct } from "@/features/admin/products/ho
 import FormField from "@/components/forms/FormField";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import { useCategories } from "@/features/categories/hooks";
 
 interface ProductFormProps {
   product?: Product;
@@ -17,6 +18,8 @@ const CATEGORIES = ["Electronics", "Fashion", "Home & Kitchen", "Beauty", "Sport
 export default function ProductForm({ product, onSuccess }: ProductFormProps) {
   const createProduct = useCreateProduct();
   const updateProduct = useUpdateProduct();
+  const { data: categories } = useCategories();
+  const categoryNames = categories?.length ? categories.map((category) => category.name) : CATEGORIES;
   const isEditing = !!product;
 
   const form = useForm({
@@ -133,7 +136,7 @@ export default function ProductForm({ product, onSuccess }: ProductFormProps) {
               className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3.5 py-2.5 text-sm text-(--color-text) outline-none focus:border-primary-500"
             >
               <option value="">Select category</option>
-              {CATEGORIES.map((c) => (
+              {categoryNames.map((c) => (
                 <option key={c} value={c}>
                   {c}
                 </option>

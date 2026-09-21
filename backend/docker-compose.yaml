@@ -165,6 +165,28 @@ services:
       - nimbus-network
 
   # ============================================================
+  # CATALOG SERVICE
+  # ============================================================
+
+  catalog-service:
+    build:
+      context: ./catalog-service
+      dockerfile: Dockerfile
+    container_name: nimbus-catalog-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/catalog_db
+      DB_USERNAME: ${POSTGRES_USER:-nimbus}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-nimbus}
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    networks:
+      - nimbus-network
+
+  # ============================================================
   # API GATEWAY
   # ============================================================
 
@@ -181,6 +203,8 @@ services:
       user-service:
         condition: service_started
       cart-service:
+        condition: service_started
+      catalog-service:
         condition: service_started
     ports:
       - "8080:8080"
