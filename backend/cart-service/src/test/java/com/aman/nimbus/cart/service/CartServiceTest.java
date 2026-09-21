@@ -30,6 +30,20 @@ class CartServiceTest {
     private CartItemRepository cartItemRepository;
 
     @Test
+    void shouldReturnEmptyCartWhenUserHasNoCart() {
+        UUID userId = UUID.randomUUID();
+        when(cartRepository.findByUserId(userId)).thenReturn(Optional.empty());
+
+        CartResponse cart = new CartService(cartRepository, cartItemRepository).getCart(userId);
+
+        assertThat(cart.getItems()).isEmpty();
+        assertThat(cart.getSubtotal()).isZero();
+        assertThat(cart.getDiscount()).isZero();
+        assertThat(cart.getShipping()).isZero();
+        assertThat(cart.getTotal()).isZero();
+    }
+
+    @Test
     void shouldAddItemAndCalculateTotals() {
         UUID userId = UUID.randomUUID();
         Cart persistedCart = Cart.builder().id(UUID.randomUUID()).userId(userId).build();
@@ -42,7 +56,6 @@ class CartServiceTest {
             item.setId(UUID.randomUUID());
             return item;
         });
-
         CartService cartService = new CartService(cartRepository, cartItemRepository);
 
         CartResponse cart = cartService.addItem(userId, new AddCartItemRequest("prod_123", 2));
@@ -73,7 +86,6 @@ class CartServiceTest {
         when(cartRepository.findByUserId(userId)).thenReturn(Optional.of(cart));
         when(cartItemRepository.findByCartUserIdAndProductId(userId, "prod_123"))
                 .thenReturn(Optional.of(item));
-
         CartService cartService = new CartService(cartRepository, cartItemRepository);
 
         CartResponse updated = cartService.addItem(userId, new AddCartItemRequest("prod_123", 3));
@@ -107,4 +119,5 @@ class CartServiceTest {
         assertThat(updated.getItems()).hasSize(1);
         assertThat(updated.getItems().getFirst().getQuantity()).isEqualTo(4);
     }
+
 }
