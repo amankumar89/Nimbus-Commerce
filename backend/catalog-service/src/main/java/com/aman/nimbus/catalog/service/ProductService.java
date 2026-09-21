@@ -35,7 +35,7 @@ public class ProductService {
         };
         Sort.Direction sortDirection = "asc".equalsIgnoreCase(direction)
                 ? Sort.Direction.ASC : Sort.Direction.DESC;
-        var result = productRepository.search(blankToNull(search), blankToNull(category), minPrice, maxPrice,
+        var result = productRepository.search(blankToEmpty(search), blankToEmpty(category), minPrice, maxPrice,
                 PageRequest.of(safePage - 1, safeSize, Sort.by(sortDirection, sortProperty)));
         return new PageResponse<>(result.getContent(), safePage, safeSize,
                 result.getTotalElements(), result.getTotalPages());
@@ -81,7 +81,7 @@ public class ProductService {
         product.setSpecifications(request.getSpecifications() == null ? new HashMap<>() : request.getSpecifications());
     }
 
-    private String blankToNull(String value) {
-        return value == null || value.isBlank() ? null : value.trim();
+    private String blankToEmpty(String value) {
+        return value == null || value.isBlank() ? "" : value.trim();
     }
 }

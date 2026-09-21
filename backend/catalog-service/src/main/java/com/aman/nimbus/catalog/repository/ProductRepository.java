@@ -13,9 +13,9 @@ import java.util.UUID;
 public interface ProductRepository extends JpaRepository<Product, UUID> {
     @Query("""
             select p from Product p
-            where (:search is null or lower(p.name) like lower(concat('%', :search, '%'))
-                or lower(p.brand) like lower(concat('%', :search, '%')))
-              and (:category is null or lower(p.category) = lower(:category))
+            where (:search = '' or lower(p.name) like concat('%', lower(:search), '%')
+                or lower(p.brand) like concat('%', lower(:search), '%'))
+              and (:category = '' or lower(p.category) = lower(:category))
               and (:minPrice is null or coalesce(p.discountPrice, p.price) >= :minPrice)
               and (:maxPrice is null or coalesce(p.discountPrice, p.price) <= :maxPrice)
             """)
