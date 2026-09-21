@@ -3,12 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { X, ShoppingCart } from "lucide-react";
-import { useToggleWishlist } from "@/features/wishlist/hooks";
-import { useAddToCart } from "@/features/cart/hooks";
+import { useMoveWishlistToCart, useToggleWishlist } from "@/features/wishlist/hooks";
 
 export default function WishlistCard({ item }: { item: WishlistItem }) {
   const { toggle } = useToggleWishlist();
-  const addToCart = useAddToCart();
+  const moveToCart = useMoveWishlistToCart();
 
   const hasDiscount = item.discountPrice && item.discountPrice < item.price;
 
@@ -43,8 +42,8 @@ export default function WishlistCard({ item }: { item: WishlistItem }) {
           )}
         </div>
         <button
-          onClick={() => addToCart.mutate({ productId: item.productId, quantity: 1 })}
-          disabled={addToCart.isPending}
+          onClick={() => moveToCart.mutate({ productId: item.productId, quantity: 1 })}
+          disabled={moveToCart.isPending}
           className="mt-auto flex items-center justify-center gap-2 rounded-lg bg-primary-700 py-2 text-xs font-semibold text-white transition-colors hover:bg-primary-800 disabled:opacity-60"
         >
           <ShoppingCart size={14} />

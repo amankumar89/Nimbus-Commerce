@@ -56,6 +56,33 @@ class CartServiceTest {
     }
 
     @Test
+    void shouldIncreaseQuantityWhenAddingAnExistingItem() {
+        UUID userId = UUID.randomUUID();
+        Cart cart = Cart.builder().id(UUID.randomUUID()).userId(userId).build();
+        CartItem item = CartItem.builder()
+                .id(UUID.randomUUID())
+                .cart(cart)
+                .productId("prod_123")
+                .name("Product prod_123")
+                .price(BigDecimal.valueOf(99.99))
+                .discountPrice(BigDecimal.valueOf(79.99))
+                .quantity(2)
+                .stock(50)
+                .build();
+        cart.getItems().add(item);
+        when(cartRepository.findByUserId(userId)).thenReturn(Optional.of(cart));
+        when(cartItemRepository.findByCartUserIdAndProductId(userId, "prod_123"))
+                .thenReturn(Optional.of(item));
+
+        CartService cartService = new CartService(cartRepository, cartItemRepository);
+
+        CartResponse updated = cartService.addItem(userId, new AddCartItemRequest("prod_123", 3));
+
+        assertThat(updated.getItems()).hasSize(1);
+        assertThat(updated.getItems().getFirst().getQuantity()).isEqualTo(5);
+    }
+
+    @Test
     void shouldUpdateItemQuantity() {
         UUID userId = UUID.randomUUID();
         Cart cart = Cart.builder().id(UUID.randomUUID()).userId(userId).build();
